@@ -2,7 +2,6 @@ import nextcord
 from nextcord.ext import commands
 import random
 from random import choice
-from numpy import number
 
 from pyperclip import determine_clipboard
 
