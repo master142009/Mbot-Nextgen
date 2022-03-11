@@ -3,4 +3,4 @@ python-dotenv==0.19.2
 requests==2.27.1
 lavalink==3.1.5
 dismusic==1.1.4
-lavalink=3.1.5
+wavelink==1.2.1
