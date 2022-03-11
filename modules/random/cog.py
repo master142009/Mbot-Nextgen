@@ -3,8 +3,6 @@ from nextcord.ext import commands
 import random
 from random import choice
 
-from pyperclip import determine_clipboard
-
 class Random(commands.Cog, name="Random"):
     """Returns random results"""
 
