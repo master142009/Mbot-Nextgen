@@ -2,11 +2,6 @@ from unicodedata import name
 import nextcord
 from nextcord.ext import commands, activities
 
-class MakeLinkBtn(nextcord.ui.view):
-    def __init__(self, Link:str):
-        super().__init__()
-        self.add_item(nextcord.ui.Button(Label="Join Game!", url=f"{Link}"))
-
 class Music(commands.Cog, name="Music"):
     """Recives Music commands"""
 
@@ -14,6 +9,11 @@ class Music(commands.Cog, name="Music"):
 
     def __init__(self, bot: commands.Bot):
         self._bot = bot 
+
+class MakeLinkBtn(nextcord.ui.view):
+    def __init__(self, Link:str):
+        super().__init__()
+        self.add_item(nextcord.ui.Button(Label="Join Game!", url=f"{Link}"))        
 
     @commands.group(imvoke_without_commands = True)
     async def play(ctx):
