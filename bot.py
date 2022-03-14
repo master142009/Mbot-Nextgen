@@ -53,7 +53,7 @@ async def sketch(ctx, channel: nextcord.TextChannel = None):
     em.add_field(name="How to Play?", description="its like skribble.io but in a vc... someone draws something and everyone else has to guess what it is.")
     em.set_thumbnail(url="https://support.discord.com/hc/article_attachments/4503731144471/Discord_SketchHeads_Lobby.png")
 
-    await ctx.send(embed=em)    
+    await ctx.send(embed=em, view=MakeLinkBtn(invite_link))
 
     # load all cogs
 for folder in os.listdir("modules"):
