@@ -31,7 +31,7 @@ async def on_message(message):
                     icon_url=f"{client.user.avatar.url}")
         Embed.set_footer(
             text=f"Mentioned by {message.author.name}", icon_url=f"{message.author.avatar.url}")
-        Embed.set_thumbnail(url=f"{client.user.avatar.url}")     
+        Embed.set_thumbnail(url="https://m.economictimes.com/thumb/msid-69278189,width-1200,height-900,resizemode-4,imgsize-74151/help-getty.jpg")     
         await message.channel.send(embed=Embed, view=myview)
 
     await client.process_commands(message)
