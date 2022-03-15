@@ -1,4 +1,5 @@
 import os
+from discord import ButtonStyle, Status
 from dotenv import load_dotenv
 import nextcord
 from nextcord.ext import commands ,tasks, activities
@@ -10,22 +11,24 @@ client = commands.Bot(command_prefix="m!")
 
 load_dotenv()
 
-status = cycle(["I am a Modern bot", "Do m!help for all my commands", "I have NextGeneration features"])
+changestatus = cycle(["I am a Modern bot", "Do m!help for all my commands", "I have NextGeneration features"])
 
 @tasks.loop(seconds=5)
-async def change_status():  
-    await client.change_presence(activity=nextcord.Game(next(status)))
+async def change_status_text():  
+    await client.change_presence(activity=nextcord.Game(next(changestatus)))
 
 @client.event
 async def on_ready():
-    change_status.start()
+    change_status_text.start()
     print(f"{client.user.name} has connected to Discord.")
 
 @client.event
 async def on_message(message):
     hi = Button(label="Invite me", url="https://discord.com/api/oauth2/authorize?client_id=888675856497643561&permissions=8&scope=bot")
+    yt = Button(label="Youtube", style=ButtonStyle.url, url="https://www.youtube.com/channel/UCl2Bbv8trRunL9YAGsbGOqQ" )
     myview = View(timeout=180)
     myview.add_item(hi)
+    myview.add_item(yt)
     if client.user.mentioned_in(message):
         Embed = nextcord.Embed(title="The NextGen Bot's Sweet help!", description="Hey! thx for mentioning me\nif your new, my prefix is `m!`\nuse `m!help` for all my commands.", colour=3066993)
         Embed.set_author(name=f"{client.user.name}",
