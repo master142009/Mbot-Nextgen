@@ -2,6 +2,7 @@ from unicodedata import name
 from nextcord import client
 import nextcord
 from nextcord.ext import commands
+import datetime
 import time
 import json
 import asyncio
@@ -25,6 +26,7 @@ class Ping(commands.Cog, name="Ping"):
         e.set_author(name=f"{ctx.author.name}",
                     icon_url=f"{ctx.author.avatar.url}")
         e.add_field(name="Ping", value=str(f"`{int(ping)}ms`"), inline=False)
+        e.timestamp = datetime.datetime.utcnow()
         e.set_footer(
             text=f"Ping test by {ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
         await ctx.send(embed=e)
@@ -96,6 +98,7 @@ class Ping(commands.Cog, name="Ping"):
         e.add_field(name='Ping 2', value=str(f"`{int(ra2)}ms`"), inline=False)
         e.add_field(name='Ping 3', value=str(f"`{int(ra3)}ms`"), inline=False)
         e.add_field(name='Ping 4', value=str(f"`{int(ra4)}ms`"), inline=False)
+        e.timestamp = datetime.datetime.utcnow()
         e.set_footer(
             text=f"Ping test by {ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
         await ctx.send(embed=e) 
