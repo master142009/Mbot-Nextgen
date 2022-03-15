@@ -26,11 +26,12 @@ async def on_message(message):
     myview = View(timeout=180)
     myview.add_item(hi)
     if client.user.mentioned_in(message):
-        Embed = nextcord.Embed(title="The NextGen Bot", description="Hey! if your new, my prefix is `m!`\nuse `m!help` for all my commands.", colour=3066993)
+        Embed = nextcord.Embed(title="The NextGen Bot's Sweet help!", description="Hey! if your new, my prefix is `m!`\nuse `m!help` for all my commands.", colour=3066993)
         Embed.set_author(name=f"{client.user.name}",
                     icon_url=f"{client.user.avatar.url}")
         Embed.set_footer(
-            text=f"Mentioned by {message.author.name}", icon_url=f"{message.author.avatar.url}") 
+            text=f"Mentioned by {message.author.name}", icon_url=f"{message.author.avatar.url}")
+        Embed.set_thumbnail(url=f"{client.user.avatar.url}")     
         await message.channel.send(embed=Embed, view=myview)
 
     await client.process_commands(message)
