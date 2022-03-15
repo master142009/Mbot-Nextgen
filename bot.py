@@ -4,6 +4,7 @@ import nextcord
 from nextcord.ext import commands ,tasks, activities
 from itertools import cycle
 from nextcord.ui import Button, View
+import datetime
 
 client = commands.Bot(command_prefix="m!")
 
@@ -26,12 +27,13 @@ async def on_message(message):
     myview = View(timeout=180)
     myview.add_item(hi)
     if client.user.mentioned_in(message):
-        Embed = nextcord.Embed(title="The NextGen Bot's Sweet help!", description="Hey! if your new, my prefix is `m!`\nuse `m!help` for all my commands.", colour=3066993)
+        Embed = nextcord.Embed(title="The NextGen Bot's Sweet help!", description="Hey! thx for mentioning me\nif your new, my prefix is `m!`\nuse `m!help` for all my commands.", colour=3066993)
         Embed.set_author(name=f"{client.user.name}",
                     icon_url=f"{client.user.avatar.url}")
         Embed.set_footer(
             text=f"Mentioned by {message.author.name}", icon_url=f"{message.author.avatar.url}")
-        Embed.set_thumbnail(url="https://m.economictimes.com/thumb/msid-69278189,width-1200,height-900,resizemode-4,imgsize-74151/help-getty.jpg")     
+        Embed.set_thumbnail(url="https://m.economictimes.com/thumb/msid-69278189,width-1200,height-900,resizemode-4,imgsize-74151/help-getty.jpg")
+        Embed.timestamp = datetime.datetime.utcnow()     
         await message.channel.send(embed=Embed, view=myview)
 
     await client.process_commands(message)
