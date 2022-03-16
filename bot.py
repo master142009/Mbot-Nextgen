@@ -7,11 +7,11 @@ from itertools import cycle
 from nextcord.ui import Button, View
 import datetime
 
-client = commands.Bot(command_prefix="m!")
+client = commands.Bot(command_prefix="m?")
 
 load_dotenv()
 
-changestatus = cycle(["I am a Modern bot", "Do m!help for all my commands", "I have NextGeneration features"])
+changestatus = cycle(["I am a Modern bot", "Do m?help for all my commands", "I have NextGeneration features"])
 
 @tasks.loop(seconds=5)
 async def change_status_text():  
@@ -30,7 +30,7 @@ async def on_message(message):
     myview.add_item(hi)
     myview.add_item(yt)
     if client.user.mentioned_in(message):
-        Embed = nextcord.Embed(title="The NextGen Bot's Sweet help!", description="Hey! thx for mentioning me\nif your new, my prefix is `m!`\nuse `m!help` for all my commands.", colour=3066993)
+        Embed = nextcord.Embed(title="The NextGen Bot's Sweet help!", description="Hey! thx for mentioning me\nif your new, my prefix is `m?`\nuse `m?help` for all my commands.", colour=3066993)
         Embed.set_author(name=f"{client.user.name}",
                     icon_url=f"{client.user.avatar.url}")
         Embed.set_footer(
