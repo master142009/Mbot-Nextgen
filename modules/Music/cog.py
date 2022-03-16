@@ -10,9 +10,7 @@ class Music(commands.Cog, name="Music"):
     def __init__(self, bot: commands.Bot):
         self._bot = bot 
 
-    @commands.command()
-    async def test(self, ctx):
-        await ctx.send("working!")
+    
 
 
 
