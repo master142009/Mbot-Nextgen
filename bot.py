@@ -26,6 +26,7 @@ async def change_status_text():
 @client.event
 async def on_ready():
     change_status_text.start()
+    client.load_extension('dismusic')
     print(f"{client.user.name} has connected to Discord.")        
 
 @client.event
@@ -53,5 +54,4 @@ for folder in os.listdir("modules"):
     if os.path.exists(os.path.join("modules", folder, "cog.py")):
         client.load_extension(f"modules.{folder}.cog")
 
-client.load_extension('dismusic')
 client.run(os.getenv("DISCORD_TOKEN"))
