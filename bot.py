@@ -1,13 +1,19 @@
 import os
-from discord import ButtonStyle, Status
+from nextcord import ButtonStyle, Status
 from dotenv import load_dotenv
 import nextcord
-from nextcord.ext import commands ,tasks, activities
+from nextcord.ext import commands ,tasks
 from itertools import cycle
 from nextcord.ui import Button, View
 import datetime
+import lavalink
 
 client = commands.Bot(command_prefix="m?")
+
+client.lavalink_nodes = [
+    {"host": "losingtime.dpaste.org", "port": 2124, "password": "SleepingOnTrains"},
+    # Can have multiple nodes here
+]
 
 load_dotenv()
 
@@ -15,12 +21,12 @@ changestatus = cycle(["I am a Modern bot", "Do m?help for all my commands", "I h
 
 @tasks.loop(seconds=5)
 async def change_status_text():  
-    await client.change_presence(activity=nextcord.Game(next(changestatus)))
+    await client.change_presence(activity=nextcord.Game(next(changestatus)))  
 
 @client.event
 async def on_ready():
     change_status_text.start()
-    print(f"{client.user.name} has connected to Discord.")
+    print(f"{client.user.name} has connected to Discord.")        
 
 @client.event
 async def on_message(message):
@@ -47,4 +53,5 @@ for folder in os.listdir("modules"):
     if os.path.exists(os.path.join("modules", folder, "cog.py")):
         client.load_extension(f"modules.{folder}.cog")
 
+client.load_extension('dismusic')
 client.run(os.getenv("DISCORD_TOKEN"))
