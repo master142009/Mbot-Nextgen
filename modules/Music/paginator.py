@@ -1,7 +1,7 @@
 import asyncio
 import math
 
-from nextcord import Color, Embed, Forbidden, InvalidArgument, NotFound, HTTPException
+from discord import Color, Embed, Forbidden, InvalidArgument, NotFound, HTTPException
 
 
 class Paginator:
