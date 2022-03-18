@@ -8,3 +8,4 @@ nextcord-ext-activities==2022.2.26
 aiohttp==3.8.1
 disrank==0.0.2
 easy-pil==0.0.2
+asyncpg==0.23.0
