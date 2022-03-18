@@ -1,5 +1,5 @@
 import wavelink
-from discord.ext import commands
+from nextcord.ext import commands
 
 from .errors import (
     InvalidLoopMode,
