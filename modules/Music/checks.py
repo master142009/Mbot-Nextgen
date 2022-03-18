@@ -1,4 +1,4 @@
-from nextcord.ext import commands
+from discord.ext import commands
 
 from .errors import MustBeSameChannel, NotConnectedToVoice, PlayerNotConnected
 
