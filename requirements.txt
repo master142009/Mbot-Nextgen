@@ -6,3 +6,5 @@ dismusic>=1.2.0
 wavelink>=1.2.1
 nextcord-ext-activities==2022.2.26
 aiohttp==3.8.1
+quart==0.16.3
+quart-discord==2.1.4
