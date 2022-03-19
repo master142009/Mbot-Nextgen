@@ -9,3 +9,4 @@ nest_asyncio==1.5.4
 motor==2.5.1
 asyncio==3.4.3
 dnspython==2.2.1
+psutil==5.9.0
