@@ -75,7 +75,7 @@ class DisPlayer(Player):
         if not track:
             raise NothingIsPlaying("Player is not playing anything.")
 
-        embed = nextcord.Embed(title=track.title, url=track.uri, color=discord.Color(0x2F3136))
+        embed = nextcord.Embed(title=track.title, url=track.uri, color=nextcord.Color(0x2F3136))
         embed.set_author(
             name=track.author,
             url=track.uri,
