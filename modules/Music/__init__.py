@@ -13,7 +13,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 
 from ._version import __version__, version_info
 from .events import MusicEvents
-from .music import Music
+from .cog import Music
 
 
 def setup(bot):
