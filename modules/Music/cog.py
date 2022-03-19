@@ -166,7 +166,7 @@ class music(commands.Cog, name="music"):
             return await ctx.send("Volume can't be less than 0")
 
         if vol > 1000 and not forced:
-            return await ctx.send("Volume can't greater than 100")
+            return await ctx.send("Volume can't greater than 1000")
 
         await player.set_volume(vol)
         await ctx.send(f"Volume set to {vol} :loud_sound:")
