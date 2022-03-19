@@ -15,6 +15,12 @@ client.lavalink_nodes = [
     # Can have multiple nodes here
 ]
 
+client.spotify_credentials = {
+    'client_id': 'a1832fb8930642a398d78e1af36df094',
+    'client_secret': '46c7eaf026fa4c3e9f9e20458406defa'
+}
+
+
 load_dotenv()
 
 changestatus = cycle(["I am a Modern bot", "Do m?help for all my commands", "I have NextGeneration features"])
