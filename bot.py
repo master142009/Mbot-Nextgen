@@ -26,7 +26,6 @@ async def change_status_text():
 @client.event
 async def on_ready():
     change_status_text.start()
-    client.load_extension('dismusic')
     print(f"{client.user.name} has connected to Discord.")        
 
 @client.event
