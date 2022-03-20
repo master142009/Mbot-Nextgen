@@ -7,6 +7,7 @@ from itertools import cycle
 from nextcord.ui import Button, View
 import datetime
 import lavalink
+import json    
 
 client = commands.Bot(command_prefix="m?")
 
@@ -15,25 +16,22 @@ client.lavalink_nodes = [
     # Can have multiple nodes here
 ]
 
-client.spotify_credentials = {
-    'client_id': 'a1832fb8930642a398d78e1af36df094',
-    'client_secret': '46c7eaf026fa4c3e9f9e20458406defa'
-}
-
-
 load_dotenv()
 
-changestatus = cycle(["I am a Modern bot", "Do m?help for all my commands", "I have NextGeneration features"])
+changestatus = cycle(["I am a Modern bot",
+ "Do m?help for all my commands",
+  "I have NextGeneration features",
+  "Mbot V3",
+  "Minecraft 1.19",
+  "ROCKING RUMMY | Youtuber"])
 
 @tasks.loop(seconds=5)
 async def change_status_text():  
-    await client.change_presence(activity=nextcord.Game(next(changestatus)))  
+    await client.change_presence(status=nextcord.Status.idle, activity=nextcord.Game(next(changestatus)))            
 
 @client.event
 async def on_ready():
     change_status_text.start()
-    client.load_extension('dismusic')
-    client.load_extension('jishaku')
     print(f"{client.user.name} has connected to Discord.")        
 
 @client.event
@@ -51,9 +49,9 @@ async def on_message(message):
             text=f"Mentioned by {message.author.name}", icon_url=f"{message.author.avatar.url}")
         Embed.set_thumbnail(url="https://m.economictimes.com/thumb/msid-69278189,width-1200,height-900,resizemode-4,imgsize-74151/help-getty.jpg")
         Embed.timestamp = datetime.datetime.utcnow()     
-        await message.channel.send(embed=Embed, view=myview)
+        await message.channel.send(embed=Embed, view=myview)    
 
-    await client.process_commands(message)
+    await client.process_commands(message)    
 
 
     # load all cogs
