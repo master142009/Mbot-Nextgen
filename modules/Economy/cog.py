@@ -82,12 +82,12 @@ class Economy(commands.Cog, name="Economy"):
                 await self.open_account(user.id)
                 bal = await ecomoney.find_one({"id": user.id})
             if amount > bal['bank']:
-                await ctx.send('You do not have enough money to withdraw that much')
+                await ecomoney.update_one({"id": user.id}, {"$inc": {"wallet": +amount, "bank": -amount}})
+                await ctx.send(f'You have withdrawn ${amount}')
             elif amount <= 0:
                 await ctx.send('You cannot withdraw 0 or less')
             else:
-                await ecomoney.update_one({"id": user.id}, {"$inc": {"wallet": +amount, "bank": -amount}})
-                await ctx.send(f'You have withdrawn ${amount}')
+                await ctx.send('You do not have enough money to withdraw that much')
         except Exception:
             await ctx.send('An error occured')
 
@@ -101,12 +101,12 @@ class Economy(commands.Cog, name="Economy"):
                 await self.open_account(user.id)
                 bal = await ecomoney.find_one({"id": user.id})
             if amount > bal['wallet']:
-                await ctx.send('You do not have enough money to deposit that much')
+                await ecomoney.update_one({"id": user.id}, {"$inc": {"wallet": -amount, "bank": +amount}})
+                await ctx.send(f'You have deposited ${amount}')
             elif amount <= 0:
                 await ctx.send('You cannot deposit 0 or less')
             else:
-                await ecomoney.update_one({"id": user.id}, {"$inc": {"wallet": -amount, "bank": +amount}})
-                await ctx.send(f'You have deposited ${amount}')
+                await ctx.send('You do not have enough money to deposit that much')
         except Exception:
             await ctx.send('An error occured')
 
