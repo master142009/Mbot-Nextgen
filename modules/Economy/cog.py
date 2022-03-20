@@ -100,7 +100,7 @@ class Economy(commands.Cog, name="Economy"):
             if bal is None:
                 await self.open_account(user.id)
                 bal = await ecomoney.find_one({"id": user.id})
-            if amount > user:
+            if amount > bal['wallet']:
                 await ctx.send('You do not have enough money to deposit that much')
             elif amount <= 0:
                 await ctx.send('You cannot deposit 0 or less')
