@@ -9,7 +9,13 @@ import datetime
 import lavalink
 import json    
 
-client = commands.Bot(command_prefix="m?")
+def get_prefix(client, message):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+
+    return prefixes[str(message.guild.id)]    
+
+client = commands.Bot(command_prefix=get_prefix)
 
 client.lavalink_nodes = [
     {"host": "losingtime.dpaste.org", "port": 2124, "password": "SleepingOnTrains"},
@@ -19,7 +25,7 @@ client.lavalink_nodes = [
 load_dotenv()
 
 changestatus = cycle(["I am a Modern bot in making",
- "Do m?help for all my commands",
+ f"Ping me for some help!",
   "I have NextGeneration features",
   "Mbot V3",
   "Minecraft 1.19",
@@ -32,7 +38,27 @@ async def change_status_text():
 @client.event
 async def on_ready():
     change_status_text.start()
-    print(f"{client.user.name} has connected to Discord.")        
+    print(f"{client.user.name} has connected to Discord.")
+
+@client.event
+async def on_guild_join(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+
+    prefixes[str(guild.id)] = 'm?'
+
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+
+@client.event
+async def on_guild_remove(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+
+    prefixes.pop(str(guild.id))
+
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)            
 
 @client.event
 async def on_message(message):
@@ -42,7 +68,7 @@ async def on_message(message):
     myview.add_item(hi)
     myview.add_item(yt)
     if client.user.mentioned_in(message):
-        Embed = nextcord.Embed(title="The NextGen Bot's Sweet help!", description="Hey! thx for mentioning me\nif your new, my prefix is `m?`\nuse `m?help` for all my commands.", colour=3066993)
+        Embed = nextcord.Embed(title="The NextGen Bot's Sweet help!", description=f"Hey! thx for mentioning me\nif your new, my prefix is `m?`\nuse `m?help` for all my commands.", colour=3066993)
         Embed.set_author(name=f"{client.user.name}",
                     icon_url=f"{client.user.avatar.url}")
         Embed.set_footer(
@@ -51,7 +77,19 @@ async def on_message(message):
         Embed.timestamp = datetime.datetime.utcnow()     
         await message.channel.send(embed=Embed, view=myview)    
 
-    await client.process_commands(message)    
+    await client.process_commands(message)
+
+@client.command(aliases=['cp'])
+async def changeprefix(ctx, prefix):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+
+    prefixes[str(ctx.guild.id)] = prefix
+
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+
+    await ctx.send(f"Successfully prefix changed to {prefix}")        
 
 
     # load all cogs
