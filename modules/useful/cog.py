@@ -204,7 +204,7 @@ class Useful(commands.Cog, name="Useful"):
             title="User Info",
             color=0xFF0000,
         )
-        embed.set_thumbnail(url=member.author.avatar.url)
+        embed.set_thumbnail(url=member.avatar.url)
         embed.add_field(name=":name_badge: Name", value=f"{member.name}")
         embed.add_field(
             name="Nickname", value=f"{member.nick}"
