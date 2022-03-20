@@ -42,19 +42,18 @@ class Economy(commands.Cog, name="Economy"):
 
 
     @commands.command(aliases=["bal"])
-    @cooldown(1, 2, BucketType.user)
-    async def balance(self, ctx, user: nextcord.Member = None):
+    async def balance(self, ctx, member: nextcord.Member = None):
         """ Check your balance"""
-        if user is None:
-            user = ctx.author
+        if member is None:
+            member = ctx.message.author
         try:
-            bal = await ecomoney.find_one({"id": user.id})
+            bal = await ecomoney.find_one({"id": member.id})
             if bal is None:
-                await self.open_account(user.id)
-                bal = await ecomoney.find_one({"id": user.id})
+                await self.open_account(member.id)
+                bal = await ecomoney.find_one({"id": member.id})
             embed = nextcord.Embed(
                 timestamp=ctx.message.created_at,
-                title=f"{user}'s Balance",
+                title=f"{member}'s Balance",
                 color=0xFF0000,
             )
             embed.add_field(
@@ -66,18 +65,17 @@ class Economy(commands.Cog, name="Economy"):
                 value=f"${bal['bank']}",
             )
             embed.set_footer(
-                text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar_url}"
+                text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar.url}"
             )
-            embed.set_thumbnail(url=user.avatar_url)
+            embed.set_thumbnail(url=member.display_avatar.url)
             await ctx.send(embed=embed)
         except Exception:
-            await ctx.send('An error occured')
+            await ctx.send('An error occured')    
 
     @commands.command(aliases=["wd"])
-    @cooldown(1, 2, BucketType.user)
     async def withdraw(self, ctx, amount: int):
         """ Withdraw money from your bank"""
-        user = ctx.author
+        user = ctx.message.author
         try:
             bal = await ecomoney.find_one({"id": user.id})
             if bal is None:
@@ -94,10 +92,9 @@ class Economy(commands.Cog, name="Economy"):
             await ctx.send('An error occured')
 
     @commands.command(aliases=["dp"])
-    @cooldown(1, 2, BucketType.user)
     async def deposit(self, ctx, amount: int):
         """ Deposit money to your bank"""
-        user = ctx.author
+        user = ctx.message.author
         try:
             bal = await ecomoney.find_one({"id": user.id})
             if bal is None:
@@ -114,7 +111,6 @@ class Economy(commands.Cog, name="Economy"):
             await ctx.send('An error occured')
 
     @commands.command()
-    @cooldown(1, 2, BucketType.user)
     async def rob(self, ctx, user: nextcord.Member = None):
         """ Rob someone"""
         if user is None or user.id == ctx.author.id:
@@ -150,7 +146,6 @@ class Economy(commands.Cog, name="Economy"):
 
     # send money to another user
     @commands.command()
-    @cooldown(1, 2, BucketType.user)
     async def send(self, ctx, user: nextcord.Member, amount: int):
         """ Send money to another user"""
         try:
@@ -177,7 +172,6 @@ class Economy(commands.Cog, name="Economy"):
 
     # A economy bot fun command
     @commands.command()
-    @cooldown(1, 2, BucketType.user)
     async def gamble(self, ctx, amount: int):
         """ Gamble money"""
         try:
