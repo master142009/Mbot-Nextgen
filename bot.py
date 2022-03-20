@@ -18,7 +18,7 @@ client.lavalink_nodes = [
 
 load_dotenv()
 
-changestatus = cycle(["I am a Modern bot",
+changestatus = cycle(["I am a Modern bot in making",
  "Do m?help for all my commands",
   "I have NextGeneration features",
   "Mbot V3",
