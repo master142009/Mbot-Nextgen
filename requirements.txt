@@ -10,4 +10,5 @@ motor==2.5.1
 asyncio==3.4.3
 dnspython==2.2.1
 psutil==5.9.0
+wheel==0.37.1
 url==0.4.2
