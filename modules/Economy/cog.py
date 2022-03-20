@@ -82,12 +82,12 @@ class Economy(commands.Cog, name="Economy"):
                 await self.open_account(user.id)
                 bal = await ecomoney.find_one({"id": user.id})
             if amount > bal['bank']:
-                await ecomoney.update_one({"id": user.id}, {"$inc": {"wallet": +amount, "bank": -amount}})
-                await ctx.send(f'You have withdrawn ${amount}')
+                await ctx.send('You do not have enough money to withdraw that much')
             elif amount <= 0:
                 await ctx.send('You cannot withdraw 0 or less')
             else:
-                await ctx.send('You do not have enough money to withdraw that much')
+                await ecomoney.update_one({"id": user.id}, {"$inc": {"wallet": +amount, "bank": -amount}})
+                await ctx.send(f'You have withdrawn ${amount}')
         except Exception:
             await ctx.send('An error occured')
 
