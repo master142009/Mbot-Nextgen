@@ -1,6 +1,6 @@
 from unicodedata import name
 from discord import User
-from nextcord import BotIntegration, client
+from nextcord import BotIntegration, Guild, client
 import nextcord
 from nextcord.ext import commands
 from nextcord.ext.commands import BucketType, cooldown
@@ -221,7 +221,7 @@ class Useful(commands.Cog, name="Useful"):
         embed.set_footer(
             text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar.url}"
         )
-        await ctx.send(embed=embed)
+        await ctx.send(embed=embed)    
 
 def setup(bot: commands.Bot):
     bot.add_cog(Useful(bot))
