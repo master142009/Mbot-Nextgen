@@ -28,7 +28,7 @@ class Economy(commands.Cog, name="Economy"):
         print("Eco Cog Loaded Succesfully")
 
     async def open_account(self, id : int):
-            newuser = {"id": id, "wallet": 0, "bank": 100}
+            newuser = {"id": id, "wallet": 10000, "bank": 100}
             # wallet = current money, bank = money in bank
             await ecomoney.insert_one(newuser)
 
@@ -58,11 +58,11 @@ class Economy(commands.Cog, name="Economy"):
             )
             embed.add_field(
                 name="Wallet",
-                value=f"${bal['wallet']}",
+                value=f":minecoin~1:{bal['wallet']}",
             )
             embed.add_field(
                 name="Bank",
-                value=f"${bal['bank']}",
+                value=f":minecoin~1:{bal['bank']}",
             )
             embed.set_footer(
                 text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar.url}"
@@ -82,12 +82,12 @@ class Economy(commands.Cog, name="Economy"):
                 await self.open_account(user.id)
                 bal = await ecomoney.find_one({"id": user.id})
             if amount > bal['bank']:
-                await ctx.send('You do not have enough money to withdraw that much')
+                await ecomoney.update_one({"id": user.id}, {"$inc": {"wallet": +amount, "bank": -amount}})
+                await ctx.send(f'You have withdrawn :minecoin~1:{amount}')
             elif amount <= 0:
                 await ctx.send('You cannot withdraw 0 or less')
             else:
-                await ecomoney.update_one({"id": user.id}, {"$inc": {"wallet": +amount, "bank": -amount}})
-                await ctx.send(f'You have withdrawn ${amount}')
+                await ctx.send('You do not have enough money to withdraw that much')
         except Exception:
             await ctx.send('An error occured')
 
@@ -101,12 +101,12 @@ class Economy(commands.Cog, name="Economy"):
                 await self.open_account(user.id)
                 bal = await ecomoney.find_one({"id": user.id})
             if amount > bal['wallet']:
-                await ctx.send('You do not have enough money to deposit that much')
+                await ecomoney.update_one({"id": user.id}, {"$inc": {"wallet": -amount, "bank": +amount}})
+                await ctx.send(f'You have deposited :minecoin~1:{amount}')
             elif amount <= 0:
                 await ctx.send('You cannot deposit 0 or less')
             else:
-                await ecomoney.update_one({"id": user.id}, {"$inc": {"wallet": -amount, "bank": +amount}})
-                await ctx.send(f'You have deposited ${amount}')
+                await ctx.send('You do not have enough money to deposit that much')
         except Exception:
             await ctx.send('An error occured')
 
@@ -138,7 +138,7 @@ class Economy(commands.Cog, name="Economy"):
                         f_user = user_bank - num
                         await self.update_bank(ctx.author.id, f_mem)
                         await self.update_bank(user.id, f_user)
-                        await ctx.send('You have robbed ${num} from {user}'.format(num=num, user=user))
+                        await ctx.send('You have robbed :minecoin~1:{num} from {user}'.format(num=num, user=user))
 
 
             except Exception:
@@ -166,7 +166,7 @@ class Economy(commands.Cog, name="Economy"):
             else:
                 await ecomoney.update_one({"id": ctx.author.id}, {"$inc": {"bank": -amount}})
                 await ecomoney.update_one({"id": user.id}, {"$inc": {"bank": +amount}})
-                await ctx.send(f'You have sent ${amount} to {user}')
+                await ctx.send(f'You have sent :minecoin~1:{amount} to {user}')
         except Exception:
             await ctx.send('An error occured')
 
@@ -187,10 +187,10 @@ class Economy(commands.Cog, name="Economy"):
                 num = random.randint(1, 100)
                 if num <= 50:
                     await ecomoney.update_one({"id": ctx.author.id}, {"$inc": {"wallet": +amount}})
-                    await ctx.send(f'You have won ${amount}')
+                    await ctx.send(f'You have won :minecoin~1:{amount}')
                 elif num > 50:
                     await ecomoney.update_one({"id": ctx.author.id}, {"$inc": {"wallet": -amount}})
-                    await ctx.send(f'You have lost ${amount}')
+                    await ctx.send(f'You have lost :minecoin~1:{amount}')
         except Exception:
             await ctx.send('An error occured')
 
