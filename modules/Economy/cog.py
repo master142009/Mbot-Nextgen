@@ -58,11 +58,11 @@ class Economy(commands.Cog, name="Economy"):
             )
             embed.add_field(
                 name="Wallet",
-                value=f":minecoin:{bal['wallet']}",
+                value=f"<:minecoin:955431748081164308>{bal['wallet']}",
             )
             embed.add_field(
                 name="Bank",
-                value=f":minecoin:{bal['bank']}",
+                value=f"<:minecoin:955431748081164308>{bal['bank']}",
             )
             embed.set_footer(
                 text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar.url}"
@@ -83,7 +83,7 @@ class Economy(commands.Cog, name="Economy"):
                 bal = await ecomoney.find_one({"id": user.id})
             if amount > bal['bank']:
                 await ecomoney.update_one({"id": user.id}, {"$inc": {"wallet": +amount, "bank": -amount}})
-                await ctx.send(f'You have withdrawn :minecoin:{amount}')
+                await ctx.send(f'You have withdrawn <:minecoin:955431748081164308>{amount}')
             elif amount <= 0:
                 await ctx.send('You cannot withdraw 0 or less')
             else:
@@ -102,7 +102,7 @@ class Economy(commands.Cog, name="Economy"):
                 bal = await ecomoney.find_one({"id": user.id})
             if amount > bal['wallet']:
                 await ecomoney.update_one({"id": user.id}, {"$inc": {"wallet": -amount, "bank": +amount}})
-                await ctx.send(f'You have deposited :minecoin:{amount}')
+                await ctx.send(f'You have deposited <:minecoin:955431748081164308>{amount}')
             elif amount <= 0:
                 await ctx.send('You cannot deposit 0 or less')
             else:
@@ -138,7 +138,7 @@ class Economy(commands.Cog, name="Economy"):
                         f_user = user_bank - num
                         await self.update_bank(ctx.author.id, f_mem)
                         await self.update_bank(user.id, f_user)
-                        await ctx.send('You have robbed :minecoin:{num} from {user}'.format(num=num, user=user))
+                        await ctx.send('You have robbed <:minecoin:955431748081164308>{num} from {user}'.format(num=num, user=user))
 
 
             except Exception:
@@ -166,7 +166,7 @@ class Economy(commands.Cog, name="Economy"):
             else:
                 await ecomoney.update_one({"id": ctx.author.id}, {"$inc": {"bank": -amount}})
                 await ecomoney.update_one({"id": user.id}, {"$inc": {"bank": +amount}})
-                await ctx.send(f'You have sent :minecoin:{amount} to {user}')
+                await ctx.send(f'You have sent <:minecoin:955431748081164308>{amount} to {user}')
         except Exception:
             await ctx.send('An error occured')
 
@@ -187,10 +187,10 @@ class Economy(commands.Cog, name="Economy"):
                 num = random.randint(1, 100)
                 if num <= 50:
                     await ecomoney.update_one({"id": ctx.author.id}, {"$inc": {"wallet": +amount}})
-                    await ctx.send(f'You have won :minecoin:{amount}')
+                    await ctx.send(f'You have won <:minecoin:955431748081164308>{amount}')
                 elif num > 50:
                     await ecomoney.update_one({"id": ctx.author.id}, {"$inc": {"wallet": -amount}})
-                    await ctx.send(f'You have lost :minecoin:{amount}')
+                    await ctx.send(f'You have lost <:minecoin:955431748081164308>{amount}')
         except Exception:
             await ctx.send('An error occured')
 
