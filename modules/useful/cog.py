@@ -1,7 +1,8 @@
 from unicodedata import name
 from discord import User
-from nextcord import BotIntegration, Guild, client
-import nextcord
+from nextcord import BotIntegration, Guild, client, Interaction, SlashOption, ChannelType
+from nextcord.abc import GuildChannel
+import nextcord 
 from nextcord.ext import commands
 from nextcord.ext.commands import BucketType, cooldown
 import datetime
@@ -27,7 +28,7 @@ class Useful(commands.Cog, name="Useful"):
         
 
     def cog_unload(self):
-        self.bot.help_command = self._original_help_command
+        self.bot.help_command = self._original_help_command                
 
 
     @commands.command()
@@ -220,7 +221,19 @@ class Useful(commands.Cog, name="Useful"):
         embed.set_footer(
             text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar.url}"
         )
-        await ctx.send(embed=embed)    
+        await ctx.send(embed=embed)   
+
+    @commands.command(aliases=['cp'])
+    async def changeprefix(self, ctx, prefix):
+        with open('prefixes.json', 'r') as f:
+            prefixes = json.load(f)
+
+        prefixes[str(ctx.guild.id)] = prefix
+
+        with open('prefixes.json', 'w') as f:
+            json.dump(prefixes, f, indent=4)
+
+        await ctx.send(f"Successfully prefix changed to {prefix}")                 
 
 def setup(bot: commands.Bot):
     bot.add_cog(Useful(bot))
