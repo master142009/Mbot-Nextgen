@@ -38,7 +38,6 @@ class Shop(commands.Cog, name="Shop"):
 
     def __init__(self, bot: commands.Bot):
         self._bot = bot
-
     @commands.Cog.listener()
     async def on_ready(self):
         print("Shop Cog Loaded Succesfully")
@@ -88,7 +87,7 @@ class Shop(commands.Cog, name="Shop"):
             inline=False
         )
         embed.set_footer(
-        text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar_url}"
+        text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar.url}"
         )
 
         await ctx.send(embed=embed)
@@ -108,7 +107,7 @@ class Shop(commands.Cog, name="Shop"):
                 inline=False
             )
         embed.set_footer(
-            text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar_url}"
+            text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar.url}"
         )
         await ctx.send(embed=embed)
 
@@ -127,7 +126,7 @@ class Shop(commands.Cog, name="Shop"):
                 inline=False
             )
         embed.set_footer(
-            text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar_url}"
+            text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar.url}"
         )
         await ctx.send(embed=embed)
 
@@ -146,7 +145,7 @@ class Shop(commands.Cog, name="Shop"):
                 inline=False
             )
         embed.set_footer(
-            text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar_url}"
+            text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar.url}"
         )
         await ctx.send(embed=embed)
 
