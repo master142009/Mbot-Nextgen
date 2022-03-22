@@ -77,19 +77,7 @@ async def on_message(message):
         Embed.timestamp = datetime.datetime.utcnow()     
         await message.channel.send(embed=Embed, view=myview)    
 
-    await client.process_commands(message)
-
-@client.command(aliases=['cp'])
-async def changeprefix(ctx, prefix):
-    with open('prefixes.json', 'r') as f:
-        prefixes = json.load(f)
-
-    prefixes[str(ctx.guild.id)] = prefix
-
-    with open('prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent=4)
-
-    await ctx.send(f"Successfully prefix changed to {prefix}")        
+    await client.process_commands(message)        
 
 
     # load all cogs
