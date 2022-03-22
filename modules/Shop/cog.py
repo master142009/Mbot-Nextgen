@@ -34,7 +34,7 @@ ecobag = cluster["eco"]["bag"]
 class Shop(commands.Cog, name="Shop"):
     """Receives Meme commands"""
 
-    COG_EMOJI = "🐸"
+    COG_EMOJI = 🛒"
 
     def __init__(self, bot: commands.Bot):
         self._bot = bot
