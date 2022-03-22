@@ -34,7 +34,7 @@ ecobag = cluster["eco"]["bag"]
 class Shop(commands.Cog, name="Shop"):
     """Receives Meme commands"""
 
-    COG_EMOJI = "🛒"
+    COG_EMOJI = "🐸"
 
     def __init__(self, bot: commands.Bot):
         self._bot = bot
@@ -302,7 +302,7 @@ class Shop(commands.Cog, name="Shop"):
             embed.add_field(name=fg[2], value=f"{x[1]}", inline=False)
 
         embed.set_footer(
-            text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar_url}"
+            text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar.url}"
         )
         await ctx.send(embed=embed)
 
@@ -336,7 +336,7 @@ class Shop(commands.Cog, name="Shop"):
 
 
         embed.set_footer(
-            text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar_url}"
+            text=f"Requested By: {ctx.author.name}", icon_url=f"{ctx.author.avatar.url}"
         )
         await ctx.send(embed=embed)
 
