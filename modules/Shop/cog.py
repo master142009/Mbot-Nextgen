@@ -73,17 +73,17 @@ class Shop(commands.Cog, name="Shop"):
         )
         embed.add_field(
             name="IoT",
-            value="Buy items related to IoT/Technology | Use `.mkt iot`",
+            value="Buy items related to IoT/Technology | Use `m?mkt iot`",
             inline=False
         )
         embed.add_field(
             name="Food",
-            value="Buy items related to Food | Use `.mkt food`",
+            value="Buy items related to Food | Use `m?mkt food`",
             inline=False
         )
         embed.add_field(
             name="Cars",
-            value="Buy items related to Cars | Use `.mkt cars`",
+            value="Buy items related to Cars | Use `m?mkt cars`",
             inline=False
         )
         embed.set_footer(
