@@ -14,7 +14,7 @@ class Moderation(commands.Cog, name="Moderation"):
         self.bot = bot    
 
     @commands.command()
-    @commands.has_permission(manage_messages=True, administrator=True)
+    @commands.has_permissions(manage_messages=True, administrator=True)
     async def purge(self, ctx, amount=6):
         """purges a user in the server"""
         await ctx.channel.purge(limit=amount)
@@ -22,7 +22,7 @@ class Moderation(commands.Cog, name="Moderation"):
         await ctx.reply(embed=embed)                          
                 
     @commands.command()
-    @commands.has_permission(manage_messages=True, administrator=True)
+    @commands.has_permissions(manage_messages=True, administrator=True)
     async def mute(self, ctx, member: nextcord.Member, *, reason=None):
         """Mute a user from the server"""
         guild = ctx.guild
@@ -41,7 +41,7 @@ class Moderation(commands.Cog, name="Moderation"):
 
 
     @commands.command()
-    @commands.has_permission(manage_messages=True, administrator=True)
+    @commands.has_permissions(manage_messages=True, administrator=True)
     async def unmute(self, ctx, member: nextcord.Member):
         """Unmute a user from the server"""
         mutedRole = nextcord.utils.get(ctx.guild.roles, name="Muted")
@@ -52,7 +52,7 @@ class Moderation(commands.Cog, name="Moderation"):
         await ctx.reply(embed=embed)
 
     @commands.command()
-    @commands.has_permission(manage_messages=True, administrator=True)
+    @commands.has_permissions(manage_messages=True, administrator=True)
     async def kick(self, ctx, member: nextcord.Member, reason="No Reason"):
         """kicks a user from the server"""
         if member == None:
@@ -67,7 +67,7 @@ class Moderation(commands.Cog, name="Moderation"):
             await guild.kick(user=member)
 
     @commands.command()
-    @commands.has_permission(manage_messages=True, administrator=True)
+    @commands.has_permissions(manage_messages=True, administrator=True)
     async def ban(self, ctx, member: nextcord.Member, reason="No Reason"):
         """Ban a user from the server"""
         if member == None:
@@ -83,7 +83,7 @@ class Moderation(commands.Cog, name="Moderation"):
 
 
     @commands.command()
-    @commands.has_permission(manage_messages=True, administrator=True)
+    @commands.has_permissions(manage_messages=True, administrator=True)
     async def unban(self, ctx, user: nextcord.User):
         """Unban a user from the server"""
         if user == None:
