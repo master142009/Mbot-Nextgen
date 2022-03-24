@@ -10,7 +10,6 @@ import lavalink
 import json    
 import aiosqlite
 import random
-import asyncio
 
 def get_prefix(client, message):
     with open('prefixes.json', 'r') as f:
@@ -42,10 +41,9 @@ async def change_status_text():
 async def on_ready():
     change_status_text.start()
     print(f"{client.user.name} has connected to Discord.")
-    setattr(client, 'db', aiosqlite.connect("level.db"))
-    await asyncio.sleep(3)
+    setattr(client, "db", await aiosqlite.connect("level.db"))
     async with client.db.cursor() as cursor:
-        await cursor.execute("CREATE TABLE IF NOT EXISTS levelS (level INTEGER, xp INTEGER, user INTEGER, guild INTEGER)")
+        await cursor.execute("CREATE TABLE IF NOT EXISTS levels (level INTEGER, xp INTEGER, user INTEGER, guild INTEGER)")
 
 @client.event
 async def on_message(message):
