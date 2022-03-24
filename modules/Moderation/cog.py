@@ -11,7 +11,14 @@ class Moderation(commands.Cog, name="Moderation"):
     COG_EMOJI = "🛡️"
 
     def __init__(self, bot: commands.Bot):
-        self.bot = bot    
+        self.bot = bot
+
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+      if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send(f"{ctx.author.mention}, Sorry, you need to tell me what the new prefix is!")
+      if isinstance(error, commands.MissingPermissions):
+        await ctx.send(f"{ctx.author.mention}, Sorry, you do not have permission to do this! `Required Permission: {*error.missing_perms,}`")
 
     @commands.command(name='purge')
     @commands.has_permissions(manage_messages=True, administrator=True)
@@ -19,12 +26,7 @@ class Moderation(commands.Cog, name="Moderation"):
         """purges a user in the server"""
         await ctx.channel.purge(limit=amount)
         embed = nextcord.Embed(title=f"{amount} messages has been purged!", colour=nextcord.Colour.blue(), timestamp=datetime.datetime.utcnow())
-        await ctx.reply(embed=embed) 
-        
-    @purge.error
-    async def kick_error(self, error, ctx):
-        if isinstance(error, error.MissingPermissions):
-            await ctx.send(":redTick: You don't have permission to purge messages.")                             
+        await ctx.reply(embed=embed)                              
                 
     @commands.command(name='mute')
     @commands.has_permissions(manage_messages=True, administrator=True)
@@ -42,12 +44,7 @@ class Moderation(commands.Cog, name="Moderation"):
         embed.add_field(name="Reason:", value=reason, inline=False)
         await ctx.reply(embed=embed)
         await member.add_roles(mutedRole, reason=reason)
-        await member.send(f"You have been muted from: {guild.name} Reason: {reason}")
-
-    @mute.error
-    async def kick_error(self, error, ctx):
-        if isinstance(error, error.MissingPermissions):
-            await ctx.send(":redTick: You don't have permission to mute members.")    
+        await member.send(f"You have been muted from: {guild.name} Reason: {reason}")    
 
 
     @commands.command(name='unmute')
@@ -59,12 +56,7 @@ class Moderation(commands.Cog, name="Moderation"):
         await member.remove_roles(mutedRole)
         await member.send(f"You have unmuted from: {ctx.guild.name}")
         embed = nextcord.Embed(title="Unmute", description=f"Unmuted {member.mention}", colour=nextcord.Colour.blue(), timestamp=datetime.datetime.utcnow())
-        await ctx.reply(embed=embed)
-
-    @unmute.error
-    async def kick_error(self, error, ctx):
-        if isinstance(error, error.MissingPermissions):
-            await ctx.send(":redTick: You don't have permission to unmute members.")    
+        await ctx.reply(embed=embed)    
 
     @commands.command(name='kick')
     @commands.has_permissions(manage_messages=True, administrator=True)
@@ -79,12 +71,7 @@ class Moderation(commands.Cog, name="Moderation"):
             embed = nextcord.Embed(title="Kicked!", description=f"{member.mention} has been kicked!!", colour=nextcord.Colour.blue(), timestamp=datetime.datetime.utcnow())
             embed.add_field(name="Reason: ", value=reason, inline=False)
             await ctx.reply(embed=embed)
-            await guild.kick(user=member)
-
-    @kick.error
-    async def kick_error(self, error, ctx):
-        if isinstance(error, error.MissingPermissions):
-            await ctx.send(":redTick: You don't have permission to kick members.")        
+            await guild.kick(user=member)        
 
     @commands.command(name='ban')
     @commands.has_permissions(manage_messages=True, administrator=True)
@@ -98,12 +85,7 @@ class Moderation(commands.Cog, name="Moderation"):
             embed = nextcord.Embed(title="Banned!", description=f"{member.mention} has been banned!", colour=nextcord.Colour.blue(), timestamp=datetime.datetime.utcnow())
             embed.add_field(name="Reason: ", value=reason, inline=False)
             await ctx.reply(embed=embed)
-            await guild.ban(user=member)
-
-    @ban.error
-    async def kick_error(self, error, ctx):
-        if isinstance(error, error.MissingPermissions):
-            await ctx.send(":redTick: You don't have permission to ban members.")        
+            await guild.ban(user=member)        
 
 
 
@@ -119,12 +101,7 @@ class Moderation(commands.Cog, name="Moderation"):
             guild = ctx.guild
             embed = nextcord.Embed(title="Unbanned!", description=f"{user.display_name} has been unbanned!", colour=nextcord.Colour.blue(), timestamp=datetime.datetime.utcnow())
             await ctx.reply(embed=embed)
-            await guild.unban(user=user)
-
-    @unban.error
-    async def kick_error(self, error, ctx):
-        if isinstance(error, error.MissingPermissions):
-            await ctx.send(":redTick: You don't have permission to unban members.")             
+            await guild.unban(user=user)             
 
 
 def setup(bot: commands.Bot):
