@@ -233,7 +233,31 @@ class Useful(commands.Cog, name="Useful"):
         with open('prefixes.json', 'w') as f:
             json.dump(prefixes, f, indent=4)
 
-        await ctx.send(f"Successfully prefix changed to {prefix}")                 
+        await ctx.send(f"Successfully prefix changed to {prefix}")
+
+    @commands.command(aliases=['lvl', 'rank', 'r'])
+    async def level(self, ctx, member: nextcord.Member = None):
+        if member is None:
+            member = ctx.author    
+        async with client.db.cursor() as cursor:
+            await cursor.execute("SELECT xp FROM levels WHERE user = ? AND guild = ?", {member.id, ctx.guild.id})
+            xp = await cursor.fetchone()
+            await cursor.execute("SELECT level FROM levels WHERE user = ? AND guild = ?", {member.id, ctx.guild.id})
+            level = await cursor.fetchone()
+
+            if not xp or not level:
+                await cursor.execute("INSERT INTO levels (level, xp, user, guild) VALUES (?, ?, ?, ?)", {0, 0, member.id, ctx.guild.id})
+                await client.commit()
+
+            try:
+                xp = xp[0]
+                level = level[0]
+            except TypeError:
+                xp = 0
+                level = 0
+
+            e = nextcord.Embed(title=f"{member.name}'s Level", description=f"Level: `{level}`\nXP: `{xp}`")
+            await ctx.send(embed=e)                                 
 
 def setup(bot: commands.Bot):
     bot.add_cog(Useful(bot))
