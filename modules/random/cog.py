@@ -170,7 +170,33 @@ class Random(commands.Cog, name="Random"):
             )
 
             file = nextcord.File(fp=background.image_bytes, filename="levelcard.png")
-            await ctx.send(file=file)        
+            await ctx.send(file=file)
+            
+    @commands.command()
+    async def reset(self, ctx, member: nextcord.Member):
+        if member is None:
+            member = ctx.author    
+        async with self.bot.db.cursor() as cursor:
+            await cursor.execute("SELECT xp FROM levels WHERE user = ? AND guild = ?", (member.id, ctx.guild.id,))
+            xp = await cursor.fetchone()
+            await cursor.execute("SELECT level FROM levels WHERE user = ? AND guild = ?", (member.id, ctx.guild.id,))
+            level = await cursor.fetchone()
+
+            if not xp or not level:
+                await cursor.execute("INSERT INTO levels (level, xp, user, guild) VALUES (?, ?, ?, ?)", (0, 0, member.id, ctx.guild.id,))
+                await self.bot.db.commit()
+
+            try:
+                xp = xp[0]
+                level = level[0]
+            except TypeError:
+                xp = 0
+                level = 0
+            
+            level = 0
+            await cursor.execute("UPDATE levels SET level = ? WHERE user = ? AND guild = ?", (level, member.id, ctx.guild.id,))
+            await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (0, member.id, ctx.guild.id,))
+            await ctx.send(f"{member.mention} has been reset!")              
 
     
     
