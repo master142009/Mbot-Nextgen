@@ -12,9 +12,6 @@ import asyncio
 import psutil
 import os
 from psutil import users
-import aiosqlite
-import random
-from easy_pil import *
 
 from.help_command import MyHelpCommand
 
@@ -32,50 +29,6 @@ class Useful(commands.Cog, name="Useful"):
 
     def cog_unload(self):
         self.bot.help_command = self._original_help_command
-
-    @commands.Cog.listener()
-    async def on_ready(self):
-        print("Level Cog ready!")
-        setattr(self.bot, "db", await aiosqlite.connect("level.db"))
-        async with self.bot.db.cursor() as cursor:
-            await cursor.execute("CREATE TABLE IF NOT EXISTS levels (level INTEGER, xp INTEGER, user INTEGER, guild INTEGER)")
-
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        if message.author.bot:
-            return
-        author = message.author
-        guild = message.guild
-        async with self.bot.db.cursor() as cursor:
-            await cursor.execute("SELECT xp FROM levels WHERE user = ? AND guild = ?", (author.id, guild.id,))
-            xp = await cursor.fetchone()
-            await cursor.execute("SELECT level FROM levels WHERE user = ? AND guild = ?", (author.id, guild.id,))
-            level = await cursor.fetchone()
-
-            if not xp or not level:
-                await cursor.execute("INSERT INTO levels (level, xp, user, guild) VALUES (?, ?, ?, ?)", (0, 0, author.id, guild.id,))
-
-            try:
-                xp = xp[0]
-                level = level[0]
-            except TypeError:
-                xp = 0
-                level = 0
-
-            if level < 5:
-                xp += random.randint(1, 3)
-                await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (xp, author.id, guild.id,))
-            else:
-                rand = random.randint(1, (level//4))
-                if rand == 1:
-                    xp += random.randint(1, 3)
-                    await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (xp, author.id, guild.id,))
-            if xp >= 100:
-                level += 1
-                await cursor.execute("UPDATE levels SET level = ? WHERE user = ? AND guild = ?", (level, author.id, guild.id,))
-                await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (0, author.id, guild.id,))
-                await message.channel.send(f"{author.mention} has leveled up to level **{level}**!")
-        await self.bot.db.commit()
 
 
     @commands.command()
@@ -281,62 +234,6 @@ class Useful(commands.Cog, name="Useful"):
             json.dump(prefixes, f, indent=4)
 
         await ctx.send(f"Successfully prefix changed to {prefix}")
-
-    @commands.command(aliases=['lvl', 'rank', 'r'])
-    async def level(self, ctx, member: nextcord.Member = None):
-        if member is None:
-            member = ctx.author    
-        async with self.bot.db.cursor() as cursor:
-            await cursor.execute("SELECT xp FROM levels WHERE user = ? AND guild = ?", (member.id, ctx.guild.id,))
-            xp = await cursor.fetchone()
-            await cursor.execute("SELECT level FROM levels WHERE user = ? AND guild = ?", (member.id, ctx.guild.id,))
-            level = await cursor.fetchone()
-
-            if not xp or not level:
-                await cursor.execute("INSERT INTO levels (level, xp, user, guild) VALUES (?, ?, ?, ?)", (0, 0, member.id, ctx.guild.id,))
-                await self.bot.db.commit()
-
-            try:
-                xp = xp[0]
-                level = level[0]
-            except TypeError:
-                xp = 0
-                level = 0
-
-            user_data = {
-                "name": f"{member.name}#{member.discriminator}",
-                "xp": xp,
-                "level": level,
-                "next_level_up": 100,
-                "percentage": xp,
-            }
-
-            background = Editor(Canvas((900, 300), color="#141414"))
-            profile_picture = await load_image_async(str(member.avatar.url))
-            profile = Editor(profile_picture).resize((150, 150)).circle_image()
-
-            poppins = Font.poppins(size=40)
-            poppins_small  = Font.poppins(size=30)
-
-            card_image_shape = [(600, 0), (750, 300), (900, 300), (900, 0)]
-
-            background.polygon(card_image_shape, color="#FFFFFF")
-            background.paste(profile, (30, 30))
-
-            background.rectangle((30, 220), width=650, height=40, color="#FFFFFF")
-            background.bar((30, 220), max_width=650, height=40, percentage=user_data["percentage"], color="#282828", radius=20,)
-            background.text((200, 40), user_data["name"], font=poppins, color="#FFFFFF")
-
-            background.rectangle((200, 100), width=350, height=2, fill="#FFFFFF")
-            background.text(
-                (200, 130),
-                f"Level - {user_data['level']} | XP - {user_data['xp']}/{user_data['next_level_up']}",
-                font = poppins_small,
-                color = "#FFFFFF",
-            )
-
-            file = nextcord.File(fp=background.image_bytes, filename="levelcard.png")
-            await ctx.send(file=file)
 
 
 
