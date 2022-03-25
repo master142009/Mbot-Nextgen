@@ -1,4 +1,3 @@
-from tkinter.font import BOLD
 import nextcord
 from nextcord.ext import commands
 import random
