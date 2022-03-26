@@ -30,6 +30,12 @@ class Useful(commands.Cog, name="Useful"):
     def cog_unload(self):
         self.bot.help_command = self._original_help_command
 
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+      if isinstance(error, commands.MissingPermissions):
+        await ctx.send(f"{ctx.author.mention}, Sorry, you do not have permission to do this! `Required Permission: Administrator`")
+        print(type(ctx), type(error))        
+
 
     @commands.command()
     async def ping(self, ctx):
@@ -224,6 +230,7 @@ class Useful(commands.Cog, name="Useful"):
         await ctx.send(embed=embed)   
 
     @commands.command(aliases=['cp'])
+    @commands.has_permissions(administrator=True)
     async def changeprefix(self, ctx, prefix):
         with open('prefixes.json', 'r') as f:
             prefixes = json.load(f)
