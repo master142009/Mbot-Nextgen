@@ -1,3 +1,4 @@
+from tkinter.font import BOLD
 import nextcord
 from nextcord.ext import commands
 import random
@@ -12,6 +13,12 @@ class Random(commands.Cog, name="Random"):
 
     def __init__(self, bot: commands.Bot):
         self.bot = bot
+
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+      if isinstance(error, commands.MissingPermissions):
+        await ctx.send(f"{ctx.author.mention}, Sorry, you do not have permission to do this! `Required Permission: Administrator`")
+        print(type(ctx), type(error))        
         
     @commands.Cog.listener()
     async def on_ready(self):
@@ -171,8 +178,9 @@ class Random(commands.Cog, name="Random"):
 
             file = nextcord.File(fp=background.image_bytes, filename="levelcard.png")
             await ctx.send(file=file)
-            
+
     @commands.command()
+    @commands.has_permissions(administrator=True)
     async def reset(self, ctx, member: nextcord.Member):
         if member is None:
             member = ctx.author    
@@ -196,7 +204,7 @@ class Random(commands.Cog, name="Random"):
             level = 0
             await cursor.execute("UPDATE levels SET level = ? WHERE user = ? AND guild = ?", (level, member.id, ctx.guild.id,))
             await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (0, member.id, ctx.guild.id,))
-            await ctx.send(f"{member.mention} has been reset!")              
+            await ctx.send(f"{member.mention} has been reset!")                   
 
     
     
