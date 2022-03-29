@@ -11,6 +11,7 @@ import json
 import aiosqlite
 import random
 import asyncio
+from dislevel import increase_xp
 
 def get_prefix(client, message):
     with open("prefixes.json", "r") as f:
@@ -61,7 +62,13 @@ async def on_guild_remove(guild):
     prefixes.pop(str(guild.id))
 
     with open('prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent=4)            
+        json.dump(prefixes, f, indent=4)
+        
+@client.event
+async def on_message(message):
+    if not message.author.bot:
+        await bot.process_commands(message)
+        await increase_xp(message, bot, rate=5)        
 
 @client.event
 async def on_message(message):
@@ -88,5 +95,6 @@ for folder in os.listdir("modules"):
     if os.path.exists(os.path.join("modules", folder, "cog.py")):
         client.load_extension(f"modules.{folder}.cog")
 
+client.load_extension('dislevel')
 client.load_extension('jishaku')        
 client.run(os.getenv("DISCORD_TOKEN"))
