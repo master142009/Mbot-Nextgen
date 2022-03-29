@@ -10,7 +10,7 @@ import random
 
 nest_asyncio.apply()
 
-mongo_url = "mongodb+srv://Mbot-NextGen:mbot14@200914@nextgen-mbot.tavmf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+mongo_url = "mongodb+srv://Mbot-NextGen:mbot14200914@nextgen-mbot.tavmf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 cluster = motor.motor_asyncio.AsyncIOMotorClient(mongo_url)
 ecomoney = cluster["eco"]["money"]
