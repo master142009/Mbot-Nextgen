@@ -32,7 +32,7 @@ def get_card(data):
             fill="#FF56B2",
             radius=20,
         )
-        background.text((200, 40), str(member), font=Font.poppins(size=40), color="white")
+        background.text((200, 40), data["name"], font=Font.poppins(size=40), color="white")
 
         background.rectangle((200, 100), width=350, height=2, fill="#17F3F6")
         background.text(
