@@ -35,14 +35,14 @@ def get_card(data):
             fill="#FF56B2",
             radius=20,
         )
-        background.text((200, 40), str(member), font=poppins, color="white")
+        background.text((200, 40), str(member), font=Font.poppins(size=40), color="white")
 
         background.rectangle((200, 100), width=350, height=2, fill="#17F3F6")
         background.text(
             (200, 130),
             f"Level : {user_data['level']}"
             + f" XP : {user_data['xp']} / {(user_data['level'] + 1) * 100}",
-            font=poppins_small,
+            font=Font.poppins(size=30),
             color="white",
         )
 
