@@ -34,7 +34,7 @@ class Leveling(commands.Cog):
             member = ctx.author
 
         user_data = await get_user_data(member, self.bot)
-        user_data["profile_image"] = str(member.avatar_url)
+        user_data["profile_image"] = str(member.avatar.url)
         user_data["name"] = str(member).split("#")[0]
         user_data["descriminator"] = str(member).split("#")[1]
 
@@ -65,7 +65,7 @@ class Leveling(commands.Cog):
             desc += f"{pos}. {user.mention} | {row[3]}xp\n"
 
         embed = nextcord.Embed(title="Leaderboard", description=desc)
-        embed.set_thumbnail(url=str(ctx.guild.icon_url))
+        embed.set_thumbnail(url=str(ctx.guild.icon.url))
 
         await ctx.send(embed=embed)
 
@@ -115,8 +115,8 @@ class Leveling(commands.Cog):
         for level, role in roles.items():
             embed.description += f"{role.mention} - {level} \n"
 
-        embed.set_thumbnail(url=str(self.bot.user.avatar_url))
-        embed.color = discord.Color.blurple()
+        embed.set_thumbnail(url=str(self.bot.user.avatar.url))
+        embed.color = nextcord.Color.blurple()
 
         await ctx.send(embed=embed)
 
