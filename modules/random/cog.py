@@ -13,13 +13,6 @@ class Random(commands.Cog, name="Random"):
 
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-
-
-    @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
-      if isinstance(error, commands.MissingPermissions):
-        await ctx.send(f"{ctx.author.mention}, Sorry, you do not have permission to do this! `Required Permission: Administrator`")
-        print(type(ctx), type(error))        
         
     @commands.Cog.listener()
     async def on_ready(self):
