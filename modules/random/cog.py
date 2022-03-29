@@ -253,9 +253,9 @@ class Random(commands.Cog, name="Random"):
         await ctx.send(embed=embed)
 
     @commands.command()
-    async def uptime(self):
+    async def uptime(self, ctx):
         e = nextcord.Embed(title="Uptime", description='Uptime: **{}**'.format(self.get_bot_uptime()))
-        await self.bot.say(embed=e)            
+        await ctx.send(embed=e)            
             
                                
 
