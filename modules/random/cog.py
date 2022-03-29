@@ -257,7 +257,7 @@ class Random(commands.Cog, name="Random"):
     @commands.command()
     async def uptime(self, ctx):
         """Shows bot's uptime."""
-        e = nextcord.Embed(title="Uptime", description='Uptime: **{}**'.format(self.get_bot_uptime()))
+        e = nextcord.Embed(title="Bot's Uptime", description='Uptime: **{}**'.format(self.get_bot_uptime()))
         await ctx.send(embed=e)            
             
                                
