@@ -16,9 +16,6 @@ def get_card(data):
 
         profile = Editor(profile).resize((150, 150)).circle_image()
 
-        poppins = Font().poppins(size=40)
-        poppins_small = Font().poppins(size=30)
-
         square = Canvas((500, 500), "#06FFBF")
         square = Editor(square)
         square.rotate(30, expand=True)
