@@ -19,6 +19,8 @@ from databases import Database
 
 class Leveling(commands.Cog):
     """Leveling commands"""
+    
+    COG_EMOJI = "🎚️"
 
     def __init__(self, bot):
         self.bot = bot
