@@ -12,7 +12,13 @@ class Moderation(commands.Cog, name="Moderation"):
     COG_EMOJI = "🛡️"
 
     def __init__(self, bot: commands.Bot):
-        self.bot = bot        
+        self.bot = bot
+
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+      if isinstance(error, commands.MissingPermissions):
+        await ctx.send(f"{ctx.author.mention}Sorry, you do not have permission to do this! `Required Permission: Administrator`")
+        print(type(ctx), type(error))        
 
     @commands.command(name='purge', pass_context=True)
     @commands.has_permissions(manage_messages=True, administrator=True)
