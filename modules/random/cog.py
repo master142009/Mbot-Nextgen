@@ -60,7 +60,6 @@ class Random(commands.Cog, name="Random"):
                     await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (xp, author.id, guild.id,))
             if xp >= 100:
                 level += 1
-                xp += 100
                 await cursor.execute("UPDATE levels SET level = ? WHERE user = ? AND guild = ?", (level, author.id, guild.id,))
                 await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (0, author.id, guild.id,))
                 await message.channel.send(f"{author.mention} you have reached to level **{level}**!")
