@@ -15,5 +15,5 @@ aiosqlite
 easy_pil
 jishaku
 numerize
-database
+databases
 dislevel
