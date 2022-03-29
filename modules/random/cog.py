@@ -13,6 +13,13 @@ class Random(commands.Cog, name="Random"):
 
     def __init__(self, bot: commands.Bot):
         self.bot = bot
+
+
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+      if isinstance(error, commands.MissingPermissions):
+        await ctx.send(f"{ctx.author.mention}, Sorry, you do not have permission to do this! `Required Permission: Administrator`")
+        print(type(ctx), type(error))        
         
     @commands.Cog.listener()
     async def on_ready(self):
@@ -53,6 +60,7 @@ class Random(commands.Cog, name="Random"):
                     await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (xp, author.id, guild.id,))
             if xp >= 100:
                 level += 1
+                xp += 100
                 await cursor.execute("UPDATE levels SET level = ? WHERE user = ? AND guild = ?", (level, author.id, guild.id,))
                 await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (0, author.id, guild.id,))
                 await message.channel.send(f"{author.mention} you have reached to level **{level}**!")
@@ -139,12 +147,17 @@ class Random(commands.Cog, name="Random"):
                 xp = 0
                 level = 0
 
+            if xp < 5:
+                percentage = 4
+            else:
+                percentage = xp   
+
             user_data = {
-                "name": f"{member.name}#{member.discriminator}",
+                "name": f"{member.name}",
                 "xp": xp,
                 "level": level,
                 "next_level_up": 100,
-                "percentage": xp,
+                "percentage": percentage,
             }
 
             background = Editor("modules/random/background.png")           
@@ -161,14 +174,14 @@ class Random(commands.Cog, name="Random"):
 
             background.rectangle((30, 220), width=650, height=40, color="#90EE90", radius=20)
             background.bar((30, 220), max_width=650, height=40, percentage=user_data["percentage"], color="#66ff00", radius=20,)
-            background.text((200, 40), user_data["name"], font=poppins, color="#FFFFFF")
+            background.text((200, 40), user_data["name"], font=poppins, color="#800080")
 
             background.rectangle((200, 100), width=350, height=2, fill="#90EE90")
             background.text(
                 (200, 130),
                 f"Level - {user_data['level']}  |  {user_data['xp']} / {user_data['next_level_up']}",
                 font = poppins_small,
-                color = "#FFFFFF",
+                color = "#800080",
             )
 
             file = nextcord.File(fp=background.image_bytes, filename="levelcard.png")
