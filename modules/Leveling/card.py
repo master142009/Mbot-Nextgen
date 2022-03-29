@@ -37,8 +37,8 @@ def get_card(data):
         background.rectangle((200, 100), width=350, height=2, fill="#17F3F6")
         background.text(
             (200, 130),
-            f"Level : {user_data['level']}"
-            + f" XP : {user_data['xp']} / {(user_data['level'] + 1) * 100}",
+            f"Level : {data['level']}"
+            + f" XP : {data['xp']} / {data['level'] + 1) * 100}",
             font=Font.poppins(size=30),
             color="white",
         )
