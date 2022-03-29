@@ -28,7 +28,7 @@ def get_card(data):
             (30, 220),
             max_width=650,
             height=40,
-            percentage=percentage,
+            percentage=data["percentage"],
             fill="#FF56B2",
             radius=20,
         )
