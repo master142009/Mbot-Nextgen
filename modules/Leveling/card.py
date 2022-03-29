@@ -4,7 +4,7 @@ from easy_pil import Editor, Canvas, Font, load_image
 
 def get_card(data):
     profile_image = load_image(data["profile_image"])
-    profile = Editor(profile_image).resize((150, 150))
+    profile = Editor(profile_image).resize((150, 150)).circle_image()
 
     if data["bg_image"].startswith("http"):
         bg_image = load_image(data["bg_image"])
@@ -16,7 +16,7 @@ def get_card(data):
     profile_back = Editor(Canvas((190, 300), "#ffffff42"))
     rep_back = Editor(Canvas((150, 50), "#3FA0FF3B")).rounded_corners(radius=5)
     dark_overlay = Editor(Canvas((900, 300), "#00000066"))
-    prog_back = Editor(Canvas((584, 34), "#A7A9AC91")).rounded_corners(radius=10)
+    prog_back = Editor(Canvas((584, 34), "#A7A9AC91")).rounded_corners(radius=20)
     prog_bar = Editor(Canvas((584, 34)))
 
     background.paste(dark_overlay, (0, 0))
@@ -49,7 +49,7 @@ def get_card(data):
     )
 
     background.paste(prog_back, (275, 220))
-    prog_bar.bar((0, 0), 580, 30, data["percentage"], "#A7A9AC91", radius=8)
+    prog_bar.bar((0, 0), 580, 30, data["percentage"], "#A7A9AC91", radius=20)
     background.paste(prog_bar, (277, 222))
     background.text(
         (570, 226),
