@@ -19,51 +19,7 @@ class Random(commands.Cog, name="Random"):
     async def on_command_error(self, ctx, error):
       if isinstance(error, commands.MissingPermissions):
         await ctx.send(f"{ctx.author.mention}, Sorry, you do not have permission to do this! `Required Permission: Administrator`")
-        print(type(ctx), type(error))        
-        
-    @commands.Cog.listener()
-    async def on_ready(self):
-        print("Level Cog ready!")
-        setattr(self.bot, "db", await aiosqlite.connect("level.db"))
-        async with self.bot.db.cursor() as cursor:
-            await cursor.execute("CREATE TABLE IF NOT EXISTS levels (level INTEGER, xp INTEGER, user INTEGER, guild INTEGER)")
-
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        if message.author.bot:
-            return
-        author = message.author
-        guild = message.guild
-        async with self.bot.db.cursor() as cursor:
-            await cursor.execute("SELECT xp FROM levels WHERE user = ? AND guild = ?", (author.id, guild.id,))
-            xp = await cursor.fetchone()
-            await cursor.execute("SELECT level FROM levels WHERE user = ? AND guild = ?", (author.id, guild.id,))
-            level = await cursor.fetchone()
-
-            if not xp or not level:
-                await cursor.execute("INSERT INTO levels (level, xp, user, guild) VALUES (?, ?, ?, ?)", (0, 0, author.id, guild.id,))
-
-            try:
-                xp = xp[0]
-                level = level[0]
-            except TypeError:
-                xp = 0
-                level = 0
-
-            if level < 5:
-                xp += random.randint(1, 3)
-                await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (xp, author.id, guild.id,))
-            else:
-                rand = random.randint(1, (level//4))
-                if rand == 1:
-                    xp += random.randint(1, 3)
-                    await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (xp, author.id, guild.id,))
-            if xp >= 100:
-                level += 1
-                await cursor.execute("UPDATE levels SET level = ? WHERE user = ? AND guild = ?", (level, author.id, guild.id,))
-                await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (0, author.id, guild.id,))
-                await message.channel.send(f"{author.mention} you have reached to level **{level}**!")
-        await self.bot.db.commit()            
+        print(type(ctx), type(error))                    
 
     @commands.command()
     async def roll(self, ctx: commands.Context, dice: str):
@@ -123,96 +79,6 @@ class Random(commands.Cog, name="Random"):
             else:
                 emojis.append(s)
         await ctx.send(''.join(emojis))
-
-    @commands.command(aliases=['lvl', 'level', 'r'])
-    async def rank(self, ctx, member: nextcord.Member = None):
-        """Shows people's rank."""
-        if member is None:
-            member = ctx.author    
-        async with self.bot.db.cursor() as cursor:
-            await cursor.execute("SELECT xp FROM levels WHERE user = ? AND guild = ?", (member.id, ctx.guild.id,))
-            xp = await cursor.fetchone()
-            await cursor.execute("SELECT level FROM levels WHERE user = ? AND guild = ?", (member.id, ctx.guild.id,))
-            level = await cursor.fetchone()
-
-            if not xp or not level:
-                await cursor.execute("INSERT INTO levels (level, xp, user, guild) VALUES (?, ?, ?, ?)", (0, 0, member.id, ctx.guild.id,))
-                await self.bot.db.commit()
-
-            try:
-                xp = xp[0]
-                level = level[0]
-            except TypeError:
-                xp = 0
-                level = 0
-
-            if xp < 5:
-                percentage = 4
-            else:
-                percentage = xp   
-
-            user_data = {
-                "name": f"{member.name}",
-                "xp": xp,
-                "level": level,
-                "next_level_up": 100,
-                "percentage": percentage,
-            }
-
-            background = Editor("modules/random/background.png")           
-            profile_picture = await load_image_async(str(member.avatar.url))
-            profile = Editor(profile_picture).resize((150, 150)).circle_image()
-
-            poppins = Font.poppins(size=40)
-            poppins_small  = Font.poppins(size=30)
-
-            card_image_shape = [(600, 0), (750, 300), (900, 300), (900, 0)]
-
-            background.polygon(card_image_shape, color="#90EE90")
-            background.paste(profile, (30, 30))
-
-            background.rectangle((30, 220), width=650, height=40, color="#90EE90", radius=20)
-            background.bar((30, 220), max_width=650, height=40, percentage=user_data["percentage"], color="#66ff00", radius=20,)
-            background.text((200, 40), user_data["name"], font=poppins, color="#ADD8E6")
-
-            background.rectangle((200, 100), width=350, height=2, fill="#90EE90")
-            background.text(
-                (200, 130),
-                f"Level - {user_data['level']}  |  {user_data['xp']} / {user_data['next_level_up']}",
-                font = poppins_small,
-                color = "#ADD8E6",
-            )
-
-            file = nextcord.File(fp=background.image_bytes, filename="levelcard.png")
-            await ctx.send(file=file)
-
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def reset(self, ctx, member: nextcord.Member):
-        """Resets people's rank."""
-        if member is None:
-            member = ctx.author    
-        async with self.bot.db.cursor() as cursor:
-            await cursor.execute("SELECT xp FROM levels WHERE user = ? AND guild = ?", (member.id, ctx.guild.id,))
-            xp = await cursor.fetchone()
-            await cursor.execute("SELECT level FROM levels WHERE user = ? AND guild = ?", (member.id, ctx.guild.id,))
-            level = await cursor.fetchone()
-
-            if not xp or not level:
-                await cursor.execute("INSERT INTO levels (level, xp, user, guild) VALUES (?, ?, ?, ?)", (0, 0, member.id, ctx.guild.id,))
-                await self.bot.db.commit()
-
-            try:
-                xp = xp[0]
-                level = level[0]
-            except TypeError:
-                xp = 0
-                level = 0
-            
-            level = 0
-            await cursor.execute("UPDATE levels SET level = ? WHERE user = ? AND guild = ?", (level, member.id, ctx.guild.id,))
-            await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (0, member.id, ctx.guild.id,))
-            await ctx.send(f"{member.mention} has been reset!")
 
     @commands.command(name='8ball')
     async def _8ball(self, ctx):
