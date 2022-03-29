@@ -15,7 +15,7 @@ def get_card(data):
         profile = load_image(data["profile_image"])
 
         profile = Editor(profile).resize((150, 150)).circle_image()
-
+        
         square = Canvas((500, 500), "#06FFBF")
         square = Editor(square)
         square.rotate(30, expand=True)
