@@ -138,6 +138,7 @@ class Random(commands.Cog, name="Random"):
 
     @commands.command(aliases=['lvl', 'level', 'r'])
     async def rank(self, ctx, member: nextcord.Member = None):
+        """Shows people's rank."""
         if member is None:
             member = ctx.author    
         async with self.bot.db.cursor() as cursor:
@@ -195,6 +196,7 @@ class Random(commands.Cog, name="Random"):
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def reset(self, ctx, member: nextcord.Member):
+        """Resets people's rank."""
         if member is None:
             member = ctx.author    
         async with self.bot.db.cursor() as cursor:
@@ -254,6 +256,7 @@ class Random(commands.Cog, name="Random"):
 
     @commands.command()
     async def uptime(self, ctx):
+        """Shows bot's uptime."""
         e = nextcord.Embed(title="Uptime", description='Uptime: **{}**'.format(self.get_bot_uptime()))
         await ctx.send(embed=e)            
             
