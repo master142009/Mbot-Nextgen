@@ -13,3 +13,4 @@ psutil==5.9.0
 discordmongopy==0.3.0
 aiosqlite
 easy_pil
+jishaku
