@@ -94,6 +94,5 @@ for folder in os.listdir("modules"):
     if os.path.exists(os.path.join("modules", folder, "cog.py")):
         client.load_extension(f"modules.{folder}.cog")
 
-client.load_extension('dislevel')
 client.load_extension('jishaku')        
 client.run(os.getenv("DISCORD_TOKEN"))
