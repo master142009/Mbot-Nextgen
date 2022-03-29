@@ -257,7 +257,7 @@ class Useful(commands.Cog, name="Useful"):
     @commands.command()
     async def uptime(self, ctx):
         """Shows bot's uptime."""
-        e = nextcord.Embed(title="Bot's Uptime", description='Uptime: **{}**'.format(self.get_bot_uptime()))
+        e = nextcord.Embed(title="Bot's Uptime", description='i have been up for **{}**'.format(self.get_bot_uptime()), color=0xFF0000)
         await ctx.send(embed=e)    
 
 
