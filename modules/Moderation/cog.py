@@ -12,66 +12,7 @@ class Moderation(commands.Cog, name="Moderation"):
     COG_EMOJI = "🛡️"
 
     def __init__(self, bot: commands.Bot):
-        self.bot = bot
-
-    @commands.Cog.listener()
-    async def on_command_error(self, error):
-        if isinstance(error, commands.CommandNotFound):
-            return await message.channel.send('CommandNotFound')
-        elif isinstance(error, commands.MissingRequiredArgument):
-            return await message.channel.send('MissingRequiredArgument')
-        elif isinstance(error, commands.BadArgument):
-            return await message.channel.send('BadArgument')
-        elif isinstance(error, commands.CommandOnCooldown):
-            return await message.channel.send('CommandOnCooldown')
-        elif isinstance(error, commands.CheckFailure):
-            return await message.channel.send('CheckFailure')
-        elif isinstance(error, commands.CommandInvokeError):
-            return await message.channel.send('CommandInvokeError')
-        elif isinstance(error, commands.CommandError):
-            return await message.channel.send('CommandError')
-        elif isinstance(error, commands.CommandOnError):
-            return await message.channel.send('CommandOnError')
-        elif isinstance(error, commands.CommandNotFound):
-            return await message.channel.send('CommandNotFound')
-        elif isinstance(error, commands.CommandInvokeError):
-            return await message.channel.send('CommandInvokeError')
-        elif isinstance(error, commands.CommandError):
-            return await message.channel.send('CommandError')
-        elif isinstance(error, commands.MissingPermissions):
-            return await message.channel.send('MissingPermissions')
-        elif isinstance(error, commands.CommandNotFound):
-            return await message.channel.send('CommandNotFound')
-        elif isinstance(error, commands.CommandOnCooldown):
-            return await message.channel.send('CommandOnCooldown')
-        elif isinstance(error, commands.CheckFailure):
-            return await message.channel.send('CheckFailure')
-        elif isinstance(error, commands.CommandInvokeError):
-            return await message.channel.send('CommandInvokeError')
-        elif isinstance(error, commands.CommandError):
-            return await message.channel.send('CommandError')
-        elif isinstance(error, commands.CommandNotFound):
-            return await message.channel.send('CommandNotFound')
-        elif isinstance(error, commands.CommandInvokeError):
-            return await message.channel.send('CommandInvokeError')
-        elif isinstance(error, commands.CommandError):
-            return await message.channel.send('CommandError')
-        elif isinstance(error, commands.MissingPermissions):
-            return await message.channel.send('MissingPermissions')
-        elif isinstance(error, commands.CommandNotFound):
-            return await message.channel.send('CommandNotFound')
-        elif isinstance(error, commands.CommandOnCooldown):
-            return await message.channel.send('CommandOnCooldown')
-        elif isinstance(error, commands.CheckFailure):
-            return await message.channel.send('CheckFailure')
-        elif isinstance(error, commands.CommandInvokeError):
-            return await message.channel.send('CommandInvokeError')
-        elif isinstance(error, commands.CommandError):
-            return await message.channel.send('CommandError')
-        elif isinstance(error, commands.CommandNotFound):
-            return await message.channel.send('CommandNotFound')
-        elif isinstance(error, commands.CommandInvokeError):
-            return await message.channel.send('CommandInvokeError')        
+        self.bot = bot        
 
     @commands.command(name='purge', pass_context=True)
     @commands.has_permissions(manage_messages=True, administrator=True)
