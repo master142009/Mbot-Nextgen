@@ -13,10 +13,9 @@ import random
 import asyncio
 
 def get_prefix(client, message):
-    with open('prefixes.json', 'r') as f:
+    with open("prefixes.json", "r") as f:
         prefixes = json.load(f)
-
-    return prefixes[str(message.guild.id)]    
+    return prefixes.get(str(message.guild.id), "m?")    
 
 client = commands.Bot(command_prefix=get_prefix, intents = nextcord.Intents.all())
 
