@@ -12,7 +12,7 @@ def get_card(data):
         bg_image = os.path.join(os.path.dirname(__file__), "assets", "bg.png")
 
         background = Editor(bg_image).resize((900, 300), crop=True)
-        profile = load_image_async(str(member.avatar_url))
+        profile = load_image(data["profile_image"])
 
         profile = Editor(profile).resize((150, 150)).circle_image()
 
