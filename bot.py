@@ -40,6 +40,7 @@ async def change_status_text():
 
 @client.event
 async def on_ready():
+    client.uptime = datetime.datetime.utcnow()
     change_status_text.start()
     print(f"{client.user.name} has connected to Discord.")                             
 
