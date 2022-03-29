@@ -11,7 +11,6 @@ import json
 import aiosqlite
 import random
 import asyncio
-from dislevel import increase_xp
 
 def get_prefix(client, message):
     with open("prefixes.json", "r") as f:
