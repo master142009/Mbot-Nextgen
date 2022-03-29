@@ -62,13 +62,13 @@ class Leveling(commands.Cog):
             pos += 1
             desc += f"{pos}. {user.mention} | {row[3]}xp\n"
 
-        embed = Embed(title="Leaderboard", description=desc)
+        embed = nextcord.Embed(title="Leaderboard", description=desc)
         embed.set_thumbnail(url=str(ctx.guild.icon_url))
 
         await ctx.send(embed=embed)
 
     @commands.command()
-    async def rep(self, ctx, member: Member):
+    async def rep(self, ctx, member: nextcord.Member):
         """Give reputation to a member."""
         if member.id == ctx.author.id:
             return await ctx.send("Can't give reputation to yourself.")
