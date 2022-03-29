@@ -306,8 +306,8 @@ class Shop(commands.Cog, name="Shop"):
         await ctx.send(embed=embed)
 
     # leaderboard
-    @commands.command(aliases=["lb"])
-    async def leaderboard(self, ctx):
+    @commands.command(aliases=["lbm"])
+    async def leaderboardmoney(self, ctx):
         """ Checkout the leaderboard."""
 
         rankings = ecomoney.find().sort("bank", -1)
