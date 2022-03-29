@@ -14,63 +14,10 @@ class Random(commands.Cog, name="Random"):
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_command_error(self, error):
-        if isinstance(error, commands.CommandNotFound):
-            return await message.channel.send('CommandNotFound')
-        elif isinstance(error, commands.MissingRequiredArgument):
-            return await message.channel.send('MissingRequiredArgument')
-        elif isinstance(error, commands.BadArgument):
-            return await message.channel.send('BadArgument')
-        elif isinstance(error, commands.CommandOnCooldown):
-            return await message.channel.send('CommandOnCooldown')
-        elif isinstance(error, commands.CheckFailure):
-            return await message.channel.send('CheckFailure')
-        elif isinstance(error, commands.CommandInvokeError):
-            return await message.channel.send('CommandInvokeError')
-        elif isinstance(error, commands.CommandError):
-            return await message.channel.send('CommandError')
-        elif isinstance(error, commands.CommandOnError):
-            return await message.channel.send('CommandOnError')
-        elif isinstance(error, commands.CommandNotFound):
-            return await message.channel.send('CommandNotFound')
-        elif isinstance(error, commands.CommandInvokeError):
-            return await message.channel.send('CommandInvokeError')
-        elif isinstance(error, commands.CommandError):
-            return await message.channel.send('CommandError')
-        elif isinstance(error, commands.MissingPermissions):
-            return await message.channel.send('MissingPermissions')
-        elif isinstance(error, commands.CommandNotFound):
-            return await message.channel.send('CommandNotFound')
-        elif isinstance(error, commands.CommandOnCooldown):
-            return await message.channel.send('CommandOnCooldown')
-        elif isinstance(error, commands.CheckFailure):
-            return await message.channel.send('CheckFailure')
-        elif isinstance(error, commands.CommandInvokeError):
-            return await message.channel.send('CommandInvokeError')
-        elif isinstance(error, commands.CommandError):
-            return await message.channel.send('CommandError')
-        elif isinstance(error, commands.CommandNotFound):
-            return await message.channel.send('CommandNotFound')
-        elif isinstance(error, commands.CommandInvokeError):
-            return await message.channel.send('CommandInvokeError')
-        elif isinstance(error, commands.CommandError):
-            return await message.channel.send('CommandError')
-        elif isinstance(error, commands.MissingPermissions):
-            return await message.channel.send('MissingPermissions')
-        elif isinstance(error, commands.CommandNotFound):
-            return await message.channel.send('CommandNotFound')
-        elif isinstance(error, commands.CommandOnCooldown):
-            return await message.channel.send('CommandOnCooldown')
-        elif isinstance(error, commands.CheckFailure):
-            return await message.channel.send('CheckFailure')
-        elif isinstance(error, commands.CommandInvokeError):
-            return await message.channel.send('CommandInvokeError')
-        elif isinstance(error, commands.CommandError):
-            return await message.channel.send('CommandError')
-        elif isinstance(error, commands.CommandNotFound):
-            return await message.channel.send('CommandNotFound')
-        elif isinstance(error, commands.CommandInvokeError):
-            return await message.channel.send('CommandInvokeError')        
+    async def on_command_error(self, ctx, error):
+      if isinstance(error, commands.MissingPermissions):
+        await ctx.send(f"{ctx.author.mention}, Sorry, you do not have permission to do this! `Required Permission: Administrator`")
+        print(type(ctx), type(error))        
         
     @commands.Cog.listener()
     async def on_ready(self):
@@ -256,7 +203,42 @@ class Random(commands.Cog, name="Random"):
             level = 0
             await cursor.execute("UPDATE levels SET level = ? WHERE user = ? AND guild = ?", (level, member.id, ctx.guild.id,))
             await cursor.execute("UPDATE levels SET xp = ? WHERE user = ? AND guild = ?", (0, member.id, ctx.guild.id,))
-            await ctx.send(f"{member.mention} has been reset!")                   
+            await ctx.send(f"{member.mention} has been reset!")
+
+    @commands.command(name='8ball')
+    async def _8ball(self, ctx):
+        """!8ball - Ask the Magic 8-Ball."""
+        icon_url = 'https://i.imgur.com/XhNqADi.png'
+        responses = [
+            'It is certain.',
+            'It is decidedly so.',
+            'Without a doubt.',
+            'Yes - definitely.',
+            'You may rely on it.',
+            'As I see it, yes.',
+            'Most likely.',
+            'Outlook good.',
+            'Yes.',
+            'Signs point to yes.',
+            'Reply hazy, try again.',
+            'Ask again later.',
+            'Better not tell you now.',
+            'Cannot predict now.',
+            'Concentrate and ask again.',
+            'Do not count on it.',
+            'My reply is no.',
+            'My sources say no.',
+            'Outlook not so good.',
+            'Very doubtful.'
+            ]
+        fortune = random.choice(responses)
+
+        embed = nextcord.Embed(colour=nextcord.Colour.purple())
+        embed.set_author(name='Magic 8-Ball', icon_url=icon_url)
+        embed.add_field(name=f'*{ctx.author.name}, your fortune says...*', value=f'**{fortune}**')
+        await ctx.send(embed=embed)        
+            
+                               
 
     
     
