@@ -42,5 +42,14 @@ def get_card(data):
             font=Font.poppins(size=30),
             color="white",
         )
+        
+        if data["next_role"]:
+            background.text(
+                (863, 265),
+                f"Next Role : {data['next_role']}",
+                font=Font.montserrat(size=18),
+                color="white",
+                align="right",
+            )
 
-    return background.image_bytes
+        return background.image_bytes
