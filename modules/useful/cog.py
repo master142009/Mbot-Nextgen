@@ -40,13 +40,7 @@ class Useful(commands.Cog, name="Useful"):
         
 
     def cog_unload(self):
-        self.bot.help_command = self._original_help_command
-
-    @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
-      if isinstance(error, commands.MissingPermissions):
-        await ctx.send(f"{ctx.author.mention}, Sorry, you do not have permission to do this! `Required Permission: Administrator`")
-        print(type(ctx), type(error))        
+        self.bot.help_command = self._original_help_command        
 
 
     @commands.command()
