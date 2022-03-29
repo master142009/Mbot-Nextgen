@@ -12,7 +12,7 @@ def get_card(data):
         bg_image = os.path.join(os.path.dirname(__file__), "assets", "bg.png")
 
         background = Editor("Leveling/assets/bg.png")
-        profile = await load_image_async(str(member.avatar_url))
+        profile = load_image_async(str(member.avatar_url))
 
         profile = Editor(profile).resize((150, 150)).circle_image()
 
