@@ -147,7 +147,7 @@ class Random(commands.Cog, name="Random"):
                 "percentage": xp,
             }
 
-            background = Editor(Canvas((900, 300), color="#006400"))           
+            background = Editor(modules/random/background (1).png)           
             profile_picture = await load_image_async(str(member.avatar.url))
             profile = Editor(profile_picture).resize((150, 150)).circle_image()
 
