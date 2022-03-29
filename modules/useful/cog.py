@@ -25,6 +25,18 @@ class Useful(commands.Cog, name="Useful"):
         bot.help_command = MyHelpCommand()
         bot.help_command.cog = self
         self.bot = bot
+
+    def get_bot_uptime(self):
+        now = datetime.datetime.utcnow()
+        delta = now - self.bot.uptime
+        hours, remainder = divmod(int(delta.total_seconds()), 3600)
+        minutes, seconds = divmod(remainder, 60)
+        days, hours = divmod(hours, 24)
+        if days:
+            fmt = '{d} days, {h} hours, {m} minutes, and {s} seconds'
+        else:
+            fmt = '{h} hours, {m} minutes, and {s} seconds'
+        return fmt.format(d=days, h=hours, m=minutes, s=seconds)        
         
 
     def cog_unload(self):
@@ -34,7 +46,7 @@ class Useful(commands.Cog, name="Useful"):
     async def on_command_error(self, ctx, error):
       if isinstance(error, commands.MissingPermissions):
         await ctx.send(f"{ctx.author.mention}, Sorry, you do not have permission to do this! `Required Permission: Administrator`")
-        print(type(ctx), type(error))       
+        print(type(ctx), type(error))        
 
 
     @commands.command()
@@ -241,6 +253,12 @@ class Useful(commands.Cog, name="Useful"):
             json.dump(prefixes, f, indent=4)
 
         await ctx.send(f"Successfully prefix changed to {prefix}")
+
+    @commands.command()
+    async def uptime(self, ctx):
+        """Shows bot's uptime."""
+        e = nextcord.Embed(title="Bot's Uptime", description='Uptime: **{}**'.format(self.get_bot_uptime()))
+        await ctx.send(embed=e)    
 
 
 
