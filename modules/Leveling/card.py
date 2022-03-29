@@ -46,7 +46,4 @@ def get_card(data):
             color="white",
         )
 
-        file = File(fp=background.image_bytes, filename="card.png")
-        await ctx.send(file=file)
-
     return background.image_bytes
