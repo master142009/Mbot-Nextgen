@@ -173,14 +173,14 @@ class Random(commands.Cog, name="Random"):
 
             background.rectangle((30, 220), width=650, height=40, color="#90EE90", radius=20)
             background.bar((30, 220), max_width=650, height=40, percentage=user_data["percentage"], color="#66ff00", radius=20,)
-            background.text((200, 40), user_data["name"], font=poppins, color="#FFFF00")
+            background.text((200, 40), user_data["name"], font=poppins, color="#FFA500")
 
             background.rectangle((200, 100), width=350, height=2, fill="#90EE90")
             background.text(
                 (200, 130),
                 f"Level - {user_data['level']}  |  {user_data['xp']} / {user_data['next_level_up']}",
                 font = poppins_small,
-                color = "#FFFF00",
+                color = "#FFA500",
             )
 
             file = nextcord.File(fp=background.image_bytes, filename="levelcard.png")
