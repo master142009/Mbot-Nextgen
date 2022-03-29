@@ -38,7 +38,7 @@ def get_card(data):
         background.text(
             (200, 130),
             f"Level : {data['level']}"
-            + f" XP : {data['xp']} / {data['level'] + 1) * 100}",
+            + f" XP : {data['current_user_exp']} / {data['next_level_exp']}",
             font=Font.poppins(size=30),
             color="white",
         )
