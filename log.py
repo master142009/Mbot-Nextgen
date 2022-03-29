@@ -3,11 +3,10 @@ from datetime import datetime
 from nextcord import Embed
 from nextcord.ext.commands import Cog
 from nextcord.ext.commands import command
-from nextcord.ext import commands
 
 
-class Log(commands.Cog, name="Log"):
-	def __init__(self, bot: commands.bot):
+class Log():
+	def __init__(self, bot):
 		self.bot = bot
 
 	@Cog.listener()
@@ -116,5 +115,5 @@ class Log(commands.Cog, name="Log"):
 			await self.log_channel.send(embed=embed)
 
 
-def setup(bot: commands.Bot):
+def setup(bot):
 	bot.add_cog(Log(bot))
