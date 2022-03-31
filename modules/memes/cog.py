@@ -58,8 +58,8 @@ class Memes(commands.Cog, name="Memes"):
                     Embed.set_footer(text="https://random.dog/")
         await ctx.send(embed = Embed)
 
-    @commands.command(aliases=["giff", "g"])
-    async def giphy(ctx,*,q="Smile"):
+    @commands.command(aliases=["giff", "g", "giphy"])
+    async def gif(ctx,*,q="Smile"):
 
         api_key = "oROLhKkeAARPPfXuoJPm3uTzPsdf1d3B"
         api_instance = giphy_client.DefaultApi()
@@ -76,7 +76,7 @@ class Memes(commands.Cog, name="Memes"):
             await ctx.send(embed=e)
 
         except ApiException as r:
-            await ctx.send("Exception for the api")    
+            print("Exception for the api")    
 
 
 
