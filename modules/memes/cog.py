@@ -58,7 +58,7 @@ class Memes(commands.Cog, name="Memes"):
                     Embed.set_footer(text="https://random.dog/")
         await ctx.send(embed = Embed)
 
-    @commands.command(aliases=["giff", "g", "giphy"])
+    @commands.command(aliases=["g", "giphy"])
     async def gif(ctx,*,q="Smile"):
 
         api_key = "oROLhKkeAARPPfXuoJPm3uTzPsdf1d3B"
