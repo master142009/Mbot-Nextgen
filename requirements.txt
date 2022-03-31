@@ -16,3 +16,4 @@ easy_pil
 jishaku
 numerize
 databases
+giphy_client==1.0.0
