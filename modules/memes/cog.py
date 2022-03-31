@@ -7,6 +7,8 @@ import aiohttp
 import giphy_client
 import random
 from giphy_client.rest import ApiException
+import requests
+from aiohttp import request
 
 class Memes(commands.Cog, name="Memes"):
     """Receives Meme commands"""
@@ -76,7 +78,24 @@ class Memes(commands.Cog, name="Memes"):
             await ctx.send(embed=e)
 
         except ApiException as r:
-            print("Exception for the api")    
+            print("Exception for the api")
+
+    @commands.command(aliases=["dadjokes", "dj"])
+    async def dadjoke(ctx):
+
+        url = "https://dad-jokes.p.rapidapi.com/random/joke"
+
+        headers = {
+            "X-RapidAPI-Host": "dad-jokes.p.rapidapi.com",
+            "X-RapidAPI-Key": "31f402705amsh0d26d2a0627a61bp1bb0a6jsn7466970987a7"
+        }
+
+        async with request("GET", url, headers=headers) as responce:
+            if responce.status == 200:
+                data = await responce.json()
+                await ctx.send(f"**{data['setup']}**\n\n||{data['punchline']}||")
+            else:
+                await ctx.send(f"{responce.status}")                
 
 
 
