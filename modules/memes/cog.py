@@ -61,7 +61,7 @@ class Memes(commands.Cog, name="Memes"):
         await ctx.send(embed = Embed)
 
     @commands.command(aliases=["giff", "g", "giphy"])
-    async def gif(ctx,*,q="Smile"):
+    async def gif(ctx, *, q="Smile"):
         """Sends gif images"""
         api_key = "oROLhKkeAARPPfXuoJPm3uTzPsdf1d3B"
         api_instance = giphy_client.DefaultApi()
@@ -85,12 +85,7 @@ class Memes(commands.Cog, name="Memes"):
 
         url = "https://dad-jokes.p.rapidapi.com/random/joke"
 
-        headers = {
-            "X-RapidAPI-Host": "dad-jokes.p.rapidapi.com",
-            "X-RapidAPI-Key": "31f402705amsh0d26d2a0627a61bp1bb0a6jsn7466970987a7"
-        }
-
-        async with request("GET", url, headers=headers) as responce:
+        async with request("GET", url, headers={}) as responce:
             if responce.status == 200:
                 data = await responce.json()
                 await ctx.send(f"**{data['setup']}**\n\n||{data['punchline']}||")
