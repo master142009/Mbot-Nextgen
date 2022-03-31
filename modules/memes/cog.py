@@ -60,25 +60,24 @@ class Memes(commands.Cog, name="Memes"):
                     Embed.set_footer(text="https://random.dog/")
         await ctx.send(embed = Embed)
 
-    @commands.command(aliases=["giff", "g", "giphy"])
-    async def gif(ctx, *, q="Smile"):
-        """Sends gif images"""
-        api_key = "oROLhKkeAARPPfXuoJPm3uTzPsdf1d3B"
+    @commands.command()
+    async def gif(ctx,*,q="random"):
+        """Sends gif images."""
+        api_key="Fqi6cJfMpTPkePMA34e6sL4Y39otSJl9"
         api_instance = giphy_client.DefaultApi()
 
-        try:
-
-            api_responce = api_instance.gifs_search_get(api_key, q, limit=5, rating='g')
-            lst = list(api_responce.data)
+        try: 
+            
+            api_response = api_instance.gifs_search_get(api_key, q, limit=5, rating='g')
+            lst = list(api_response.data)
             giff = random.choice(lst)
 
-            e = nextcord.Embed(title=q)
-            e.set_image(url=f"https://media.giphy.com/media/{giff.id}/giphy.gif")
+            emb = nextcord.Embed(title=q)
+            emb.set_image(url = f'https://media.giphy.com/media/{giff.id}/giphy.gif')
 
-            await ctx.send(embed=e)
-
-        except ApiException as r:
-            print("Exception for the api")
+            await ctx.channel.send(embed=emb)
+        except ApiException as e:
+            print("Exception when calling DefaultApi->gifs_search_get: %s\n" % e)
 
     @commands.command(aliases=["dadjokes", "dj"])
     async def dadjoke(ctx):
