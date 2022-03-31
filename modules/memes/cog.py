@@ -4,6 +4,9 @@ import nextcord
 import requests
 from nextcord.ext import commands
 import aiohttp
+import giphy_client
+import random
+from giphy_client.rest import ApiException
 
 class Memes(commands.Cog, name="Memes"):
     """Receives Meme commands"""
@@ -13,7 +16,7 @@ class Memes(commands.Cog, name="Memes"):
     def __init__(self, bot: commands.Bot):
         self._bot = bot    
 
-    @commands.command()
+    @commands.command(aliases=["memes"])
     async def reddit(self, ctx: commands.Context):
         """Sends Funny reddit posts"""
         async with ctx.channel.typing():
@@ -29,7 +32,7 @@ class Memes(commands.Cog, name="Memes"):
         await ctx.send(embed = m)
 
 
-    @commands.command()
+    @commands.command(aliases=["c"])
     async def cat(self, ctx: commands.Context):
         """Sends cute cat images"""
         async with ctx.channel.typing():
@@ -42,7 +45,7 @@ class Memes(commands.Cog, name="Memes"):
                     Embed.set_footer(text="http://random.cat/")
         await ctx.send(embed = Embed)
 
-    @commands.command()
+    @commands.command(aliases=["d"])
     async def dog(self, ctx: commands.Context):
         """Sends cute dog images"""
         async with ctx.channel.typing():
@@ -54,6 +57,26 @@ class Memes(commands.Cog, name="Memes"):
                     Embed.set_image(url=data['url'])
                     Embed.set_footer(text="https://random.dog/")
         await ctx.send(embed = Embed)
+
+    @commands.command(aliases=["giff", "g"])
+    async def giphy(ctx,*,q="Smile"):
+
+        api_key = "oROLhKkeAARPPfXuoJPm3uTzPsdf1d3B"
+        api_instance = giphy_client.DefaultApi()
+
+        try:
+
+            api_responce = api_instance.gifs_search_get(api_key, q, limit=5, rating='g')
+            lst = list(api_responce.data)
+            giff = random.choice(lst)
+
+            e = nextcord.Embed(title=q)
+            e.set_image(url=f"https://media.giphy.com/media/{giff.id}/giphy.gif")
+
+            await ctx.send(embed=e)
+
+        except ApiException as r:
+            await ctx.send("Exception for the api")    
 
 
 
