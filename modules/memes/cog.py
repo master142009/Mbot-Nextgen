@@ -89,7 +89,18 @@ class Memes(commands.Cog, name="Memes"):
                 data = await responce.json()
                 await ctx.send(f"**{data['setup']}**\n\n||{data['punchline']}||")
             else:
-                await ctx.send(f"{responce.status}")                
+                await ctx.send(f"{responce.status}")
+
+    @commands.command(aliases=["rok"])
+    async def rock(ctx):
+        async with ctx.channel.typing():
+            async with aiohttp.ClientSession() as cs:
+                async with cs.get('https://mrconos.pythonanywhere.com/rock/random') as r:
+                    res = await r.json()
+                    embed = nextcord.Embed(title=res['name'], description=res['desc'])
+                    embed.set_image(url=res['image'])
+                    await ctx.send(embed=embed)
+                            
 
 
 
