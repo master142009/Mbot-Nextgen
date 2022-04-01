@@ -68,7 +68,7 @@ class Memes(commands.Cog, name="Memes"):
 
         try: 
             
-            api_response = api_instance.gif_search_get(api_key, q, limit=5, rating='g')
+            api_response = api_instance.gifs_search_get(api_key, q, limit=5, rating='g')
             lst = list(api_response.data)
             giff = random.choice(lst)
 
