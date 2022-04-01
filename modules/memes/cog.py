@@ -63,12 +63,12 @@ class Memes(commands.Cog, name="Memes"):
     @commands.command()
     async def gif(self, ctx,*,q="random"):
         """Sends gif images."""
-        api_key="Fqi6cJfMpTPkePMA34e6sL4Y39otSJl9"
+        api_key="oROLhKkeAARPPfXuoJPm3uTzPsdf1d3B"
         api_instance = giphy_client.DefaultApi()
 
         try: 
             
-            api_response = api_instance.gifs_search_get(api_key, q, limit=5, rating='g')
+            api_response = api_instance.gif_search_get(api_key, q, limit=5, rating='g')
             lst = list(api_response.data)
             giff = random.choice(lst)
 
