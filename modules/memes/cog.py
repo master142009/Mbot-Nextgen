@@ -61,7 +61,7 @@ class Memes(commands.Cog, name="Memes"):
         await ctx.send(embed = Embed)
 
     @commands.command()
-    async def gif(ctx,*,q="random"):
+    async def gif(self, ctx,*,q="random"):
         """Sends gif images."""
         api_key="Fqi6cJfMpTPkePMA34e6sL4Y39otSJl9"
         api_instance = giphy_client.DefaultApi()
@@ -80,7 +80,7 @@ class Memes(commands.Cog, name="Memes"):
             print("Exception when calling DefaultApi->gifs_search_get: %s\n" % e)
 
     @commands.command(aliases=["dadjokes", "dj"])
-    async def dadjoke(ctx):
+    async def dadjoke(self, ctx):
 
         url = "https://dad-jokes.p.rapidapi.com/random/joke"
 
@@ -92,7 +92,7 @@ class Memes(commands.Cog, name="Memes"):
                 await ctx.send(f"{responce.status}")
 
     @commands.command(aliases=["rok"])
-    async def rock(ctx):
+    async def rock(self, ctx):
         async with ctx.channel.typing():
             async with aiohttp.ClientSession() as cs:
                 async with cs.get('https://mrconos.pythonanywhere.com/rock/random') as r:
