@@ -71,7 +71,7 @@ async def on_message(message):
     myview = View(timeout=180)
     myview.add_item(hi)
     myview.add_item(yt)
-    if client.user.mentioned_in(message):
+    if client.user.mentioned(message):
         Embed = nextcord.Embed(title="The NextGen Bot's Sweet help!", description=f"Hey! thx for mentioning me\nif your new, my prefix is `m?`\nuse `m?help` for all my commands.", colour=3066993)
         Embed.set_author(name=f"{client.user.name}",
                     icon_url=f"{client.user.avatar.url}")
@@ -79,22 +79,18 @@ async def on_message(message):
             text=f"Mentioned by {message.author.name}", icon_url=f"{message.author.avatar.url}")
         Embed.set_thumbnail(url="https://m.economictimes.com/thumb/msid-69278189,width-1200,height-900,resizemode-4,imgsize-74151/help-getty.jpg")
         Embed.timestamp = datetime.datetime.utcnow()     
-        await message.channel.send(embed=Embed, view=myview)    
+        await message.channel.send(embed=Embed, view=myview)
 
-    await client.process_commands(message)
-
-@client.event
-async def on_message(message):
     if message.author == client.user:
         return
 
     msg = message.content
 
     if msg.startswith('m?AI'):
-        e = nextcord.Embed(title="Mbot AI", description="AI version of me [Invite AI me](https://discord.com/oauth2/authorize?client_id=959359412236070923&scope=bot&permissions=8)")
-        await message.channel.send(embed=e)
+        e = nextcord.Embed(title="Mbot AI", description="AI version of me[Invite AI me](https://discord.com/oauth2/authorize?client_id=959359412236070923&scope=bot&permissions=8)")
+        await message.channel.send(embed=e)            
 
-    await client.process_commands(message)               
+    await client.process_commands(message)              
 
 
     # load all cogs
