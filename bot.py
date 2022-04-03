@@ -61,13 +61,7 @@ async def on_guild_remove(guild):
     prefixes.pop(str(guild.id))
 
     with open('prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent=4)
-        
-@client.event
-async def on_message(message):
-    if not message.author.bot:
-        await bot.process_commands(message)
-        await increase_xp(message, bot, rate=5)        
+        json.dump(prefixes, f, indent=4)            
 
 @client.event
 async def on_message(message):
@@ -86,7 +80,21 @@ async def on_message(message):
         Embed.timestamp = datetime.datetime.utcnow()     
         await message.channel.send(embed=Embed, view=myview)    
 
-    await client.process_commands(message)            
+    await client.process_commands(message)
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+
+    msg = message.content
+
+    if msg.startswith('m?ai', 'm?AI'):
+        hi = Button(label="Invite AI me", url="https://discord.com/oauth2/authorize?client_id=959359412236070923&scope=bot&permissions=8")
+        myview = View(timeout=180)
+        myview.add_item(hi)
+        e = nextcord.Embed(title="Mbot AI", description="AI version of me")
+        await message.channel.send(embed=e)          
 
 
     # load all cogs
@@ -94,5 +102,4 @@ for folder in os.listdir("modules"):
     if os.path.exists(os.path.join("modules", folder, "cog.py")):
         client.load_extension(f"modules.{folder}.cog")
 
-client.load_extension('jishaku')        
 client.run(os.getenv("DISCORD_TOKEN"))
