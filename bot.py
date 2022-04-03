@@ -92,7 +92,7 @@ async def on_message(message):
 
     msg = message.content
 
-    if msg.startswith('m?ai', 'm?AI'):
+    if msg.startswith('m?AI'):
         e = nextcord.Embed(title="Mbot AI", description="AI version of me")
         await message.channel.send(embed=e)
 
