@@ -91,7 +91,7 @@ async def on_message(message):
     msg = message.content
 
     if msg.startswith('m?AI'):
-        e = nextcord.Embed(title="Mbot AI", description="AI version of me[Invite AI me](https://discord.com/oauth2/authorize?client_id=959359412236070923&scope=bot&permissions=8)")
+        e = nextcord.Embed(title="Mbot AI", description="AI version of me [Invite AI me](https://discord.com/oauth2/authorize?client_id=959359412236070923&scope=bot&permissions=8)")
         await message.channel.send(embed=e)
 
     await client.process_commands(message)               
