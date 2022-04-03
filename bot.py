@@ -11,6 +11,7 @@ import json
 import aiosqlite
 import random
 import asyncio
+import jishaku
 
 def get_prefix(client, message):
     with open("prefixes.json", "r") as f:
@@ -104,4 +105,5 @@ for folder in os.listdir("modules"):
     if os.path.exists(os.path.join("modules", folder, "cog.py")):
         client.load_extension(f"modules.{folder}.cog")
 
+client.load_extension("jishaku")
 client.run(os.getenv("DISCORD_TOKEN"))
