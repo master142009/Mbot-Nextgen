@@ -84,17 +84,19 @@ async def on_message(message):
 
 @client.event
 async def on_message(message):
+    hi = Button(label="Invite AI me", url="https://discord.com/oauth2/authorize?client_id=959359412236070923&scope=bot&permissions=8")
+    myview = View(timeout=180)
+    myview.add_item(hi)
     if message.author == client.user:
         return
 
     msg = message.content
 
-    if msg.startswith('m?AI'):
-        hi = Button(label="Invite AI me", url="https://discord.com/oauth2/authorize?client_id=959359412236070923&scope=bot&permissions=8")
-        myview = View(timeout=180)
-        myview.add_item(hi)
+    if msg.startswith('m?ai', 'm?AI'):
         e = nextcord.Embed(title="Mbot AI", description="AI version of me")
-        await message.channel.send(embed=e)          
+        await message.channel.send(embed=e)
+
+    await client.process_commands(message)              
 
 
     # load all cogs
