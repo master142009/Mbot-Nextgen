@@ -89,7 +89,7 @@ async def on_message(message):
 
     msg = message.content
 
-    if msg.startswith('m?ai', 'm?AI'):
+    if msg.startswith('m?AI'):
         hi = Button(label="Invite AI me", url="https://discord.com/oauth2/authorize?client_id=959359412236070923&scope=bot&permissions=8")
         myview = View(timeout=180)
         myview.add_item(hi)
