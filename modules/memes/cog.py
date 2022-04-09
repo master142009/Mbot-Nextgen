@@ -91,11 +91,8 @@ class Memes(commands.Cog, name="Memes"):
         }
 
         async with request("GET", url, headers=headers) as responce:
-            if responce.status == 200:
-                data = await responce.json()
-                await ctx.send(f"**{data['setup']}**\n\n||{data['punchline']}||")
-            else:
-                await ctx.send(str(responce.status))
+            data = await responce.json()
+            await ctx.send(f"**{data['setup']}**\n\n||{data['punchline']}||")
 
     @commands.command(aliases=["rok"])
     async def rock(self, ctx):
