@@ -12,13 +12,16 @@ import aiosqlite
 import random
 import asyncio
 import jishaku
+from nextcord import Interaction
 
 def get_prefix(client, message):
     with open("prefixes.json", "r") as f:
         prefixes = json.load(f)
     return prefixes.get(str(message.guild.id), "m?")    
 
-client = commands.Bot(command_prefix=get_prefix, intents = nextcord.Intents.all())
+intents = nextcord.Intents.default()
+intents.members = True
+client = commands.Bot(command_prefix=get_prefix, intents = intents)
 
 client.lavalink_nodes = [
     {"host": "losingtime.dpaste.org", "port": 2124, "password": "SleepingOnTrains"},
