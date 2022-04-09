@@ -43,7 +43,12 @@ class Useful(commands.Cog, name="Useful"):
         
 
     def cog_unload(self):
-        self.bot.help_command = self._original_help_command        
+        self.bot.help_command = self._original_help_command
+        
+    @nextcord.slash_command(guild_ids=[serverid], description = "Sends pong")        
+    async def ping(self, interaction: nextcord.Interaction):
+        await interaction.response.send_message(f"**Pong!**")
+    
 
 
     @commands.command()
@@ -255,11 +260,7 @@ class Useful(commands.Cog, name="Useful"):
     async def uptime(self, ctx):
         """Shows bot's uptime."""
         e = nextcord.Embed(title="Bot's Uptime", description='i have been up for **{}**'.format(self.get_bot_uptime()), color=0xFF0000)
-        await ctx.send(embed=e)
-       
-    @nextcord.slash_command(guild_ids=[serverid], description = "Sends pong")        
-    async def ping(self, interaction: nextcord.Interaction):
-        await interaction.response.send_message(f"**Pong!**")    
+        await ctx.send(embed=e)    
 
 
 
