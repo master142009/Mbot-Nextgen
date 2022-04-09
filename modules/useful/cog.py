@@ -16,6 +16,8 @@ from nextcord import Interaction
 
 from.help_command import MyHelpCommand
 
+serverid = 952214039273013328   
+
 class Useful(commands.Cog, name="Useful"):
     """Shows Useful commands"""
 
@@ -255,10 +257,8 @@ class Useful(commands.Cog, name="Useful"):
         e = nextcord.Embed(title="Bot's Uptime", description='i have been up for **{}**'.format(self.get_bot_uptime()), color=0xFF0000)
         await ctx.send(embed=e)
        
-    serverid = 952214039273013328    
-
-    @nextcord.slash_command(name = "ping", description = "Sends pong", guild_ids=[serverid])        
-    async def ping(self, interaction: Interaction):
+    @nextcord.slash_command(guild_ids=[serverid], description = "Sends pong")        
+    async def ping(self, interaction: nextcord.Interaction):
         await interaction.response.send_message(f"**Pong!**")    
 
 
