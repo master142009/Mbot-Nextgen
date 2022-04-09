@@ -257,12 +257,9 @@ class Useful(commands.Cog, name="Useful"):
        
     serverid = 952214039273013328    
 
-    @nextcord.slash_command(name = "ping", description = "Sends ping of the bot", guild_ids=[serverid])        
+    @nextcord.slash_command(name = "ping", description = "Sends pong", guild_ids=[serverid])        
     async def ping(self, interaction: Interaction):
-        before = time.monotonic()
-        message = await interaction.response.send_message("Testing...")
-        ping = (time.monotonic() - before) * 1000
-        await interaction.response.send_message(f"`{int(ping)}ms`")    
+        await interaction.response.send_message(f"**Pong!**")    
 
 
 
