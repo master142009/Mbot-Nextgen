@@ -14,9 +14,7 @@ import os
 from psutil import users
 from nextcord import Interaction
 
-from.help_command import MyHelpCommand
-
-serverid = 952214039273013328   
+from.help_command import MyHelpCommand   
 
 class Useful(commands.Cog, name="Useful"):
     """Shows Useful commands"""
@@ -44,10 +42,6 @@ class Useful(commands.Cog, name="Useful"):
 
     def cog_unload(self):
         self.bot.help_command = self._original_help_command
-        
-    @nextcord.slash_command(guild_ids=[serverid], description = "Sends pong")        
-    async def ping(self, interaction: nextcord.Interaction):
-        await interaction.response.send_message(f"**Pong!**")
     
 
 
