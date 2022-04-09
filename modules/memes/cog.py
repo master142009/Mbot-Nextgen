@@ -81,10 +81,16 @@ class Memes(commands.Cog, name="Memes"):
 
     @commands.command(aliases=["dadjokes", "dj"])
     async def dadjoke(self, ctx):
+        """Sends funny dadjokes"""
 
         url = "https://dad-jokes.p.rapidapi.com/random/joke"
 
-        async with request("GET", url, headers={}) as responce:
+        headers = {
+            "X-RapidAPI-Host": "dad-jokes.p.rapidapi.com",
+            "X-RapidAPI-Key": "31f402705amsh0d26d2a0627a61bp1bb0a6jsn7466970987a7"
+        }
+
+        async with request("GET", url, headers=headers) as responce:
             if responce.status == 200:
                 data = await responce.json()
                 await ctx.send(f"**{data['setup']}**\n\n||{data['punchline']}||")
@@ -93,6 +99,7 @@ class Memes(commands.Cog, name="Memes"):
 
     @commands.command(aliases=["rok"])
     async def rock(self, ctx):
+        """Sends random rock images"""
         async with ctx.channel.typing():
             async with aiohttp.ClientSession() as cs:
                 async with cs.get('https://mrconos.pythonanywhere.com/rock/random') as r:
