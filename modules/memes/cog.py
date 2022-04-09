@@ -90,9 +90,8 @@ class Memes(commands.Cog, name="Memes"):
             "X-RapidAPI-Key": "31f402705amsh0d26d2a0627a61bp1bb0a6jsn7466970987a7"
         }
 
-        async with request("GET", url, headers=headers) as responce:
-            data = await responce.json()
-            await ctx.send(f"**{data['setup']}**\n\n||{data['punchline']}||")
+        response = requests.request("GET", url, headers=headers)
+        await ctx.send(f"**{response['setup']}**\n\n||{response['punchline']}||")
 
     @commands.command(aliases=["rok"])
     async def rock(self, ctx):
