@@ -17,3 +17,4 @@ jishaku
 numerize
 databases
 giphy_client==1.0.0
+nextcord-py-slash-command
