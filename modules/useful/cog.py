@@ -12,6 +12,7 @@ import asyncio
 import psutil
 import os
 from psutil import users
+from nextcord import Interaction
 
 from.help_command import MyHelpCommand
 
