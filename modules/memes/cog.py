@@ -9,6 +9,7 @@ import random
 from giphy_client.rest import ApiException
 import requests
 from aiohttp import request
+import json
 
 class Memes(commands.Cog, name="Memes"):
     """Receives Meme commands"""
@@ -78,7 +79,7 @@ class Memes(commands.Cog, name="Memes"):
             await ctx.channel.send(embed=emb)
         except ApiException as e:
             print("Exception when calling DefaultApi->gifs_search_get: %s\n" % e)
-
+            
     @commands.command(aliases=["dadjokes", "dj"])
     async def dadjoke(self, ctx):
         """Sends funny dadjokes"""
@@ -91,7 +92,7 @@ class Memes(commands.Cog, name="Memes"):
         }
 
         response = requests.request("GET", url, headers=headers)
-        await ctx.send(f"**{response['setup']}**\n\n||{response['punchline']}||")
+        await ctx.send(f"**{json.loads(response.text)['setup']}**\n\n||{json.loads(response.text)['punchline']}||")
 
     @commands.command(aliases=["rok"])
     async def rock(self, ctx):
