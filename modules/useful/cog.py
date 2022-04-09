@@ -255,7 +255,9 @@ class Useful(commands.Cog, name="Useful"):
         e = nextcord.Embed(title="Bot's Uptime", description='i have been up for **{}**'.format(self.get_bot_uptime()), color=0xFF0000)
         await ctx.send(embed=e)
        
-    @nextcord.slash_command(name = "ping", description = "Sends ping of the bot")        
+    serverid = 952214039273013328    
+
+    @nextcord.slash_command(name = "ping", description = "Sends ping of the bot", guild_ids=[serverid])        
     async def ping(self, interaction: Interaction):
         before = time.monotonic()
         message = await interaction.response.send_message("Testing...")
