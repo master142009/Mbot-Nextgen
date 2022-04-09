@@ -93,7 +93,13 @@ async def on_message(message):
         e = nextcord.Embed(title="Mbot AI", description="AI version of me [Invite AI me](https://discord.com/oauth2/authorize?client_id=959359412236070923&scope=bot&permissions=8)")
         await message.channel.send(embed=e)            
 
-    await client.process_commands(message)              
+    await client.process_commands(message)
+    
+serverid = 952214039273013328       
+
+@client.slash_command(guild_ids=[serverid], description = "Sends pong")        
+async def ping(interaction: nextcord.Interaction):
+    await interaction.response.send_message(f"**Pong!**")    
 
 
     # load all cogs
