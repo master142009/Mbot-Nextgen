@@ -260,14 +260,7 @@ class Useful(commands.Cog, name="Useful"):
         before = time.monotonic()
         message = await interaction.response.send_message("Testing...")
         ping = (time.monotonic() - before) * 1000
-        e = nextcord.Embed(title="Connection", colour=909999)
-        e.set_author(name=f"{interaction.author.name}",
-                    icon_url=f"{interaction.author.avatar.url}")
-        e.add_field(name="Ping", value=str(f"`{int(ping)}ms`"), inline=False)
-        e.timestamp = datetime.datetime.utcnow()
-        e.set_footer(
-            text=f"Ping test by {interaction.author.name}", icon_url=f"{interaction.author.avatar.url}")
-        await interaction.response.send_message(embed=e)    
+        await interaction.response.send_message(f"`{int(ping)}ms`")    
 
 
 
