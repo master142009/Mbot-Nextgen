@@ -95,7 +95,7 @@ async def on_message(message):
 
     await client.process_commands(message)
     
-@client.slash_command(guild_ids=[952214039273013328,], description = "Sends pong")        
+@client.slash_command(guild_ids=[935815605976727592,], description = "Sends pong")        
 async def ping(interaction: Interaction):
     await interaction.response.send_message(f"**Pong!**")    
 
