@@ -85,7 +85,11 @@ class Memes(commands.Cog, name="Memes"):
 
         url = "https://icanhazdadjoke.com/"
 
-        async with request("GET", url, headers={}) as responce:
+        headers = {
+            "Accept": "application/json"
+        }
+
+        async with request("GET", url, headers=headers) as responce:
             if responce.status == 200:
                 data = await responce.json()
                 await ctx.send(f"**{data['joke']}**")
